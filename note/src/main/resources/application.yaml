@@ -1,0 +1,8 @@
+server:
+  port: 1026
+
+spring:
+  profiles:
+#    active: datasource
+#    配置生产环境为 dev
+    active: datasource,dev
