@@ -3,7 +3,10 @@
     <h3>
       <li>{{ poem.title }}</li>
     </h3>
-    <blockquote class="poem" v-html="changeStyle(poem.poem, poem.time)" />
+    <blockquote
+      class="poem"
+      v-html="this.utils.changeStyle(poem.content, poem.time)"
+    />
   </div>
 </template>
 
@@ -13,27 +16,14 @@ export default {
   props: {
     poem: {
       title: String,
-      poem: String,
+      content: String,
       time: String
     }
   },
   data() {
     return {};
   },
-  methods: {
-    changeStyle(Ypoem, time) {
-      let changedSentence = "";
-      if (Ypoem !== undefined) {
-        let arr = Ypoem.split("\n");
-        for (let index = 0; index < arr.length; index++) {
-          changedSentence += "<p>" + arr[index] + "</p>";
-        }
-      } else {
-        console.log("组件内poem为空:"+Ypoem);
-      }
-      return changedSentence + "<p><i>" + time + "</i></p>";
-    }
-  }
+  methods: {}
 };
 </script>
 

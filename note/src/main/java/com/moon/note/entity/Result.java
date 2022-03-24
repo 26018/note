@@ -15,5 +15,17 @@ import lombok.NoArgsConstructor;
 public
 class Result<T> {
     private int code;
-    private T message;
+    private String message;
+    private T data;
+
+    public Result(Response r) {
+        this.code = r.getCode();
+        this.message = r.getMessage();
+    }
+    public Result(Response r, T data) {
+        this.code = r.getCode();
+        this.message = r.getMessage();
+        this.data = data;
+    }
+
 }

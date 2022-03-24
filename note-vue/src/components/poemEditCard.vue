@@ -1,6 +1,6 @@
 <template>
   <div id="poemEditCard" v-show="showTable">
-    <div >
+    <div>
       <h3>
         <li>{{ poem.title }}</li>
       </h3>
@@ -14,7 +14,10 @@
       </button>
     </div>
 
-    <blockquote class="poem" v-html="changeStyle(poem.poem, poem.time)" />
+    <blockquote
+      class="poem"
+      v-html="this.utils.changeStyle(poem.content, poem.time)"
+    />
   </div>
 </template>
 
@@ -24,7 +27,7 @@ export default {
   props: {
     poem: {
       title: String,
-      poem: String,
+      content: String,
       time: String
     }
   },
@@ -36,26 +39,15 @@ export default {
   },
 
   methods: {
-    changeStyle(Ypoem, time) {
-      let changedSentence = "";
-      if (Ypoem !== undefined) {
-        let arr = Ypoem.split("\n");
-        for (let index = 0; index < arr.length; index++)
-          changedSentence += "<p>" + arr[index] + "</p>";
-      } else console.log("组件内poem为空");
-      return changedSentence + "<p><i>" + time + "</i></p>";
-    },
-
     deletePoemOPT(poemID) {
       // 请求后台删除poem
       this.$axios({
-        url: "/note/delete/" + poemID,
-        method: "POST"
+        url: "/api/notes/" + poemID,
+        method: "delete"
       })
         .then(result => {
           console.log(result.data);
-          // result.data 有两个值 ["success" || "fail"]
-          if (result.data === "success") {
+          if (result.data.code === 200) {
             // 保存成功通知
             this.$message({
               showClose: true,
@@ -92,14 +84,14 @@ export default {
         .then(() => {
           that.deletePoemOPT(poemID);
           // 删除成功后 立即关闭盒子
-          that.showTable = false
+          that.showTable = false;
         })
         .catch(() => {
           this.$message({
             type: "info",
             message: "已取消删除",
-            showClose:true,
-            duration:1000
+            showClose: true,
+            duration: 1000
           });
         });
     },
@@ -162,7 +154,6 @@ li {
   border-radius: 4px;
   outline: none;
 }
-
 
 blockquote {
   border-left: 4px gainsboro solid;

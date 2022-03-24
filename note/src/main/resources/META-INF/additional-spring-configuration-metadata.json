@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "token-expire",
+      "type": "java.lang.String",
+      "description": "token expired time"
+    }
+  ] }

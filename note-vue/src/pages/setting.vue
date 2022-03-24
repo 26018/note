@@ -1,9 +1,12 @@
 <template>
   <div id="setting">
-    <div class="poemKfram" v-if="(poems != undefined || poems != null)" v-for="poem in poems">
-      <PoemEditCard :poem="poem"/>
+    <div
+      class="poemKfram"
+      v-if="poems != undefined || poems != null"
+      v-for="poem in poems"
+    >
+      <PoemEditCard :poem="poem" />
     </div>
-
   </div>
 </template>
 
@@ -13,42 +16,33 @@ export default {
   name: "setting",
   data() {
     return {
-       poems:[],
+      poems: []
     };
   },
   components: { PoemEditCard },
 
   created() {
     let that = this;
-    this.$axios({
-      url: "/note/getAll",
-      method: "GET"
-    })
-      .then((result) => {
-        that.poems = JSON.parse(result.data.message);
-      })
-      .catch(err => {
-        console.log("err log:" + err);
-      });
+    this.utils.notes(function(data) {
+      that.poems = data;
+    });
   }
 };
 </script>
 <style lang="css" scoped>
-
 #setting {
   width: 100%;
   height: 90%;
 }
 
-
 .el-message {
   min-width: 90% !important;
 }
 
-.el-message-box{
+.el-message-box {
   width: 90% !important;
 }
-.poemKfram{
+.poemKfram {
   width: 90%;
   margin: 0 auto;
 }

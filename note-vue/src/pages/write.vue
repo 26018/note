@@ -1,6 +1,7 @@
 <template>
   <div id="write" ref="pronbit">
     <div class="writeBoxOBJ">
+      <p>{{ poems }}</p>
       <textarea
         :placeholder="sentence"
         class="writeBox"
@@ -17,11 +18,19 @@
 </template>
 
 <script>
+import utils from "../common/utils";
 export default {
   name: "write",
   data() {
     return {
       poemString: "",
+      poems: "火树银花合，星桥铁锁开。",
+      poemBox: {
+        currentIdx: 0,
+        data: [],
+        createTime: 0,
+        expiredTime: 86400000
+      },
       sentence:
         "You should write the title on the first line where the cursor are，" +
         "then you can write the sentence on other lines where you want. " +
@@ -58,6 +67,32 @@ export default {
     this.$refs.poemBox.focus();
     // 检测是否存在未保存的输入
     this.poemString = localStorage.getItem("unSavePoemString");
+
+    var pb = JSON.parse(localStorage.getItem("poemBox"));
+    var currentIdx = localStorage.getItem("currentIdx");
+    // 本地无存储或存储过期则向服务器请求（过期时间为一天）
+    if (
+      pb == null ||
+      Date.parse(new Date()) - pb["expiredTime"] > pb["createTime"]
+    ) {
+      utils.poems(res => {
+        pb = new Object();
+        currentIdx = 0;
+        pb["createTime"] = Date.parse(new Date());
+        pb["data"] = JSON.parse(res.data.data);
+        pb["expiredTime"] = 86400000;
+        localStorage.setItem("currentIdx", currentIdx);
+        localStorage.setItem("poemBox", JSON.stringify(pb));
+      });
+    }
+    this.poems = pb["data"][++currentIdx]["sentence"];
+    setInterval(() => {
+      if (currentIdx >= pb["data"].length) {
+        currentIdx = 0;
+      }
+      this.poems = pb["data"][++currentIdx]["sentence"];
+      localStorage.setItem("currentIdx", currentIdx);
+    }, 8000);
   }
 };
 </script>
@@ -69,13 +104,21 @@ export default {
 }
 
 /* 第一个框 */
-
 @media only screen and (max-device-width: 768px) {
   .writeBoxOBJ {
     /* border: 1px purple solid; */
     margin: 0 auto;
     width: 90%;
     height: 80%;
+  }
+
+  p {
+    text-align: center;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid gray;
+    color: gray;
+    margin-bottom: 10px;
   }
 
   .saveBtn {
@@ -99,5 +142,4 @@ export default {
     width: 0;
   }
 }
-
 </style>

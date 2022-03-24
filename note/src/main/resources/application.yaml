@@ -6,3 +6,6 @@ spring:
 #    active: datasource
 #    配置生产环境为 dev
     active: datasource,dev
+
+token-expire: 604800000 # 一周
+poemCount: 50
