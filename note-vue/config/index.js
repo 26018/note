@@ -36,12 +36,12 @@ module.exports = {
     // 配置跨域
     proxyTable: {
       "/api": {
-        target: "http://localhost:1026/", //后端接口地址
+        target: "http://82.157.231.20:1026/", //后端接口地址
         changeOrigin: true, //是否允许跨越
         pathRewrite: {
-          "^/api": "" //重写,
-        }
-      }
+          "^/api": "", //重写,
+        },
+      },
     },
 
     // Various Dev Server settings
@@ -53,7 +53,7 @@ module.exports = {
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
     devtool: "cheap-module-eval-source-map",
     cacheBusting: true,
-    cssSourceMap: true
+    cssSourceMap: true,
   },
 
   build: {
@@ -65,6 +65,6 @@ module.exports = {
     devtool: "#source-map",
     productionGzip: false,
     productionGzipExtensions: ["js", "css"],
-    bundleAnalyzerReport: process.env.npm_config_report
-  }
+    bundleAnalyzerReport: process.env.npm_config_report,
+  },
 };

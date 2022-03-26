@@ -45,10 +45,12 @@ export default {
   methods: {
     show2(e) {
       if (e.ctrlKey == true) {
-        this.savePoemData(this.poemString);
+        // CTRL + S 的操作
+        utils.noteSave();
       }
     },
     updatePoemData(poemString) {
+      console.log(poemString);
       // 保存数据到浏览器
       localStorage.setItem("unSavePoemString", poemString);
     }
@@ -85,7 +87,8 @@ export default {
         localStorage.setItem("poemBox", JSON.stringify(pb));
       });
     }
-    this.poems = pb["data"][++currentIdx]["sentence"];
+
+    this.poems = pb == null ? this.poems : pb["data"][++currentIdx]["sentence"];
     setInterval(() => {
       if (currentIdx >= pb["data"].length) {
         currentIdx = 0;

@@ -23,9 +23,6 @@ export default {
 };
 </script>
 <style lang="css" scoped>
-#NotFound {
-  
-}
 h2 {
   text-align: center;
   margin: 0 auto;

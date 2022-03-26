@@ -3,31 +3,18 @@
     <div id="title">Sign in to Note</div>
     <br />
     <div id="content">
-      <div id="subTitle">Username</div>
-      <input
-        type="text"
-        @focus="focusEvent()"
-        name=""
-        id="inputDiv"
-        v-model="username"
-      />
-
-      <div id="subTitle">Password</div>
-      <input
-        type="password"
-        @focus="focusEvent()"
-        name=""
-        id="inputDiv"
-        v-model="password"
-      />
+      <div id="subTitle">账号</div>
+      <input type="text" name="" id="inputDiv" v-model="username" />
+      <div id="subTitle">密码</div>
+      <input type="password" name="" id="inputDiv" v-model="password" />
       <br />
-      <button
-        @click="utils.userLogin(username, password, loginCallBack)"
-        id="btn"
-      >
-        登录
-      </button>
-      <p v-show="vshow">{{ errMsg }}</p>
+      <div class="btnDiv">
+        <button @click="utils.userLogin(username, password)" id="login">
+          登录</button
+        ><button @click="utils.userRegister(username, password)" id="register">
+          注册
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -38,29 +25,8 @@ export default {
   data() {
     return {
       username: "",
-      password: "",
-      vshow: false,
-      errMsg: ""
+      password: ""
     };
-  },
-  created() {},
-  methods: {
-    // 登录回调事件
-    loginCallBack(data) {
-      if (data.code != 200) {
-        this.vshow = true;
-        this.errMsg = data.message.toLowerCase();
-      } else {
-        localStorage.setItem("token", data.data);
-        this.$router.push("/");
-      }
-    },
-    // 用户输入时隐藏错误信息
-    focusEvent() {
-      if (this.vshow) {
-        this.vshow = !this.vshow;
-      }
-    }
   }
 };
 </script>
@@ -81,7 +47,7 @@ export default {
   padding-top: 30px;
   margin: 0 auto;
   width: 80vw;
-  height: 30vh;
+  height: 200px;
   display: flex;
   flex-direction: column;
   background-color: #f6f8fa;
@@ -109,19 +75,34 @@ export default {
   line-height: 30px;
 }
 
-#btn {
+.btnDiv {
+  width: 70%;
+  margin: 0 auto;
+  border: 0px;
+}
+
+#login,
+#register {
   margin: 0 auto;
   border-radius: 5px;
   border: 0px;
   outline: none;
-  width: 70%;
-  background-color: green;
+  width: 40%;
   color: white;
   font-size: 14px;
   height: 30px;
   text-align: center;
 }
 
+#login {
+  background-color: green;
+  float: left;
+}
+
+#register {
+  background-color: gray;
+  float: right;
+}
 p {
   margin-top: 10px;
   color: #ff9999;

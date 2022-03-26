@@ -1,10 +1,6 @@
 <template>
   <div id="read">
-    <div
-      class="poemDiv"
-      v-if="poems != undefined || poems != null"
-      v-for="poem in poems"
-    >
+    <div class="poemDiv" v-if="poems != null" v-for="poem in poems">
       <PoemCard :poem="poem" />
     </div>
   </div>

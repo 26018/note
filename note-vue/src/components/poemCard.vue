@@ -5,7 +5,7 @@
     </h3>
     <blockquote
       class="poem"
-      v-html="this.utils.changeStyle(poem.content, poem.time)"
+      v-html="utils.noteParse(poem.content, poem.time)"
     />
   </div>
 </template>
