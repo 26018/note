@@ -5,10 +5,10 @@
       <textarea
         :placeholder="sentence"
         class="writeBox"
-        @keyup="updatePoemData(poemString)"
+        @keyup="utils.updatePoemData(poemString)"
         v-model="poemString"
         ref="poemBox"
-        @keydown.s="show2($event)"
+        @keydown.s="CTRLAndS($event)"
       >
       {{ poemString }}
     </textarea
@@ -43,16 +43,15 @@ export default {
   },
 
   methods: {
-    show2(e) {
+    CTRLAndS(e) {
       if (e.ctrlKey == true) {
         // CTRL + S 的操作
-        utils.noteSave();
+        let that = this;
+        utils.noteSave(() => {
+          localStorage.removeItem("unSavePoemString");
+          that.poemString = "";
+        });
       }
-    },
-    updatePoemData(poemString) {
-      console.log(poemString);
-      // 保存数据到浏览器
-      localStorage.setItem("unSavePoemString", poemString);
     }
   },
   mounted() {
@@ -66,7 +65,7 @@ export default {
     });
 
     // 文本框自动获取焦点
-    this.$refs.poemBox.focus();
+    // this.$refs.poemBox.focus();
     // 检测是否存在未保存的输入
     this.poemString = localStorage.getItem("unSavePoemString");
 
@@ -90,7 +89,7 @@ export default {
 
     this.poems = pb == null ? this.poems : pb["data"][++currentIdx]["sentence"];
     setInterval(() => {
-      if (currentIdx >= pb["data"].length) {
+      if (currentIdx >= pb["data"].length - 1) {
         currentIdx = 0;
       }
       this.poems = pb["data"][++currentIdx]["sentence"];
@@ -119,7 +118,7 @@ export default {
     text-align: center;
     width: 100%;
     border-radius: 3px;
-    border: 1px solid gray;
+    background-color: gainsboro;
     color: gray;
     margin-bottom: 10px;
   }
@@ -139,7 +138,6 @@ export default {
     resize: none;
     border: 0px;
     outline: none;
-    /* border: 1px solid red; */
   }
   .writeBox::-webkit-scrollbar {
     width: 0;

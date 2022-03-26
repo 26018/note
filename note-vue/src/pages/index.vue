@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     noteSaveCallBack() {
-      this.$refs.child.$refs.poemBox.focus();
+      // this.$refs.child.$refs.poemBox.focus();
       localStorage.removeItem("unSavePoemString");
       this.$refs.child.poemString = "";
     }

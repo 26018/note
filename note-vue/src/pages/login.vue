@@ -4,16 +4,36 @@
     <br />
     <div id="content">
       <div id="subTitle">账号</div>
-      <input type="text" name="" id="inputDiv" v-model="username" />
+      <el-input
+        style="width:70%;margin: 0px auto;"
+        size="small"
+        v-model="username"
+        placeholder="请输入账号"
+      ></el-input>
       <div id="subTitle">密码</div>
-      <input type="password" name="" id="inputDiv" v-model="password" />
+      <el-input
+        style="width:70%;margin: 0px auto;"
+        size="small"
+        placeholder="请输入密码"
+        v-model="password"
+        show-password
+      ></el-input>
       <br />
       <div class="btnDiv">
-        <button @click="utils.userLogin(username, password)" id="login">
-          登录</button
-        ><button @click="utils.userRegister(username, password)" id="register">
-          注册
-        </button>
+        <el-button
+          style="float: left;width:40%;font-size: 12px;"
+          @click="utils.userLogin(username, password)"
+          size="mini"
+          type="primary"
+          >登录</el-button
+        >
+        <el-button
+          style="float: right;width:40%;font-size: 12px;"
+          @click="utils.userRegister(username, password)"
+          size="mini"
+          type="success"
+          >注册</el-button
+        >
       </div>
     </div>
   </div>
@@ -54,20 +74,11 @@ export default {
   border-radius: 10px;
 }
 
-#subTitle,
-#inputDiv {
+#subTitle {
   margin: 0px auto;
   width: 70%;
   height: 30px;
-  border-radius: 5px;
   -moz-outline-radius: 5px;
-  border: 2px #eef1f4 solid;
-  outline-color: #afcdf1;
-}
-#inputDiv {
-  padding: 8px;
-}
-#subTitle {
   outline: none;
   font-weight: 300;
   font-size: 12px;
@@ -79,33 +90,5 @@ export default {
   width: 70%;
   margin: 0 auto;
   border: 0px;
-}
-
-#login,
-#register {
-  margin: 0 auto;
-  border-radius: 5px;
-  border: 0px;
-  outline: none;
-  width: 40%;
-  color: white;
-  font-size: 14px;
-  height: 30px;
-  text-align: center;
-}
-
-#login {
-  background-color: green;
-  float: left;
-}
-
-#register {
-  background-color: gray;
-  float: right;
-}
-p {
-  margin-top: 10px;
-  color: #ff9999;
-  text-align: center;
 }
 </style>

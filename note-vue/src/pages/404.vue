@@ -10,11 +10,6 @@ export default {
   data() {
     return {};
   },
-
-  components: {},
-
-  computed: {},
-
   methods: {
     goToIndex() {
       this.$router.go(-1);

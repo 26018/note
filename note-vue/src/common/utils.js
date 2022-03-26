@@ -53,7 +53,7 @@ export default {
         callback(JSON.parse(result.data.data));
       })
       .catch(err => {
-        this.floatMessage(err, "error");
+        this.floatMessage(err, "error", 2000, true);
       });
   },
   // 请求所有的poem,
@@ -73,7 +73,7 @@ export default {
       password == null ||
       password.trim() == ""
     ) {
-      this.floatMessage("账号密码不能为空", "error", 2000);
+      this.floatMessage("账号密码不能为空", "error", 2000, true);
       return;
     }
 
@@ -86,7 +86,12 @@ export default {
       }
     }).then(result => {
       if (result.data.code != 200) {
-        this.floatMessage(result.data.message.toLowerCase(), "error");
+        this.floatMessage(
+          result.data.message.toLowerCase(),
+          "error",
+          2000,
+          true
+        );
       } else {
         localStorage.setItem("token", result.data.data);
         router.push("/");
@@ -101,7 +106,7 @@ export default {
       password == null ||
       password.trim() == ""
     ) {
-      this.floatMessage("账号密码不能为空", "error", 2000);
+      this.floatMessage("账号密码不能为空", "error", 2000, true);
       return;
     }
     axios({
@@ -113,9 +118,9 @@ export default {
       }
     }).then(result => {
       if (result.data.code != 200) {
-        this.floatMessage(result.data.message.toLowerCase(), "error");
+        this.floatMessage(result.data.message.toLowerCase(), "error", 2000);
       } else {
-        this.floatMessage(result.data.message.toLowerCase(), "success");
+        this.floatMessage(result.data.message.toLowerCase(), "success", 2000);
       }
     });
   },
@@ -133,8 +138,6 @@ export default {
     let note = localStorage.getItem("unSavePoemString");
     let token = localStorage.getItem("token");
     if (note == null || token == null) {
-      console.log("note:" + note);
-      console.log("token:" + token);
       return;
     }
     let that = this;
@@ -147,7 +150,7 @@ export default {
         // 请求后端写入数据库操作
         let poemString = localStorage.getItem("unSavePoemString");
         if (poemString == null || poemString.trim() == null) {
-          that.floatMessage("至少得有题目和内容吧？", "warning");
+          that.floatMessage("至少得有题目和内容吧？", "warning", 2000);
           return;
         }
         let arr = poemString.replace(/\n/g, "<br>");
@@ -168,7 +171,7 @@ export default {
               // 例如：write的重新聚焦，unSavePoemString重置为空等
               callback();
             } else {
-              that.floatMessage(result.data.message, "error", true);
+              that.floatMessage(result.data.message, "error", 2000, true);
             }
           })
           .catch(err => {
@@ -182,5 +185,10 @@ export default {
   // 单次点击导航
   navClick(path) {
     router.push(path);
+  },
+
+  // 保存数据到浏览器
+  updatePoemData(poemString) {
+    localStorage.setItem("unSavePoemString", poemString);
   }
 };
