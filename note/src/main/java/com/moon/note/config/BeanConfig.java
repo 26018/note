@@ -15,9 +15,20 @@ import java.util.HashMap;
 public class BeanConfig {
     /**
      * 将token与用户关联，方便取出获取的数据
-      */
+     */
     @Bean
-    HashMap<String, UserToken> userTokensMap(){
+    HashMap<String, UserToken> userTokensMap() {
+        return new HashMap<>(16);
+    }
+
+    /**
+     * 验证码集合
+     * key = code
+     * value = expireTime
+     */
+
+    @Bean
+    HashMap<String, Long> verificationCodeMap() {
         return new HashMap<>(16);
     }
 

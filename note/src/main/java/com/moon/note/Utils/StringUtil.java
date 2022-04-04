@@ -1,7 +1,4 @@
-package com.moon.note.Util;
-
-import com.moon.note.entity.Response;
-import com.moon.note.entity.Result;
+package com.moon.note.Utils;
 
 import java.util.Random;
 
@@ -12,13 +9,13 @@ import java.util.Random;
 
 public class StringUtil {
 
-    String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz_0123456789=+";
+     static String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz_0123456789=+";
 
     public static boolean stringValidCheck(String str) {
         return str != null && str.trim().length() != 0;
     }
 
-    public String randomSalt(int len) {
+    public static String randomSalt(int len) {
         StringBuilder stringBuilder = new StringBuilder();
         Random random = new Random();
         int length = base.length();

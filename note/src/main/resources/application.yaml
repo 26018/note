@@ -7,5 +7,8 @@ spring:
 #    配置生产环境为 dev
     active: datasource,dev
 
-token-expire: 604800000 # 一周
+expire:
+  token: 604800000 # 一周
+  randomSalt: 60000
+
 poemCount: 50

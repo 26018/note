@@ -4,5 +4,10 @@
       "name": "token-expire",
       "type": "java.lang.String",
       "description": "token expired time"
+    },
+    {
+      "name": "expire.token",
+      "type": "java.lang.String",
+      "description": "token 过期时间间隙"
     }
   ] }

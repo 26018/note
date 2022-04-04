@@ -14,15 +14,16 @@ public enum Response {
     /**
      *
      */
-    FAIL(520, "OPERATION FAIL"),
-    PARAMETER_IS_NULL(530, "PARAMETER WILL NOT BE NULL"),
-    USER_NOT_REGISTER(540, "USER NOT REGISTER"),
-    USER_NOT_LOGIN(550, "USER_NOT_LOGIN"),
-    USER_ALREADY_EXISTS(560,"USER ALREADY EXISTS"),
+    FAIL(520, "fail"),
+    PARAMETER_IS_NULL(530, "parameter will not be null"),
+    USER_NOT_REGISTER(540, "user not register"),
+    USER_NOT_LOGIN(550, "user not login"),
+    USER_ALREADY_EXISTS(560,"user already exist"),
+    WEAK_PASSWORD(570,"wake password"),
 
-    TOKEN_IS_VALID(600,"TOKEN IS VALID"),
-    TOKEN_IS_EXPIRED(610,"TOKEN IS EXPIRED"),
-    SUCCESS(200, "SUCCESS"),
+    TOKEN_IS_VALID(600,"token is valid"),
+    TOKEN_IS_EXPIRED(610,"token is expired"),
+    SUCCESS(200, "success"),
     ;
 
     private final int code;

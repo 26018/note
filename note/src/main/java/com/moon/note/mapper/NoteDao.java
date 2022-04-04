@@ -15,8 +15,6 @@ import java.util.List;
 @Repository
 public interface NoteDao {
 
-    @Value("${}")
-
     @Select("select id,AES_DECRYPT(title,'lsk-art') as title, time,authorId, AES_DECRYPT(content, 'lsk-art') as content from notes where authorId = #{authorId} and deleted = false order by time desc")
     List<Note> selectNotesByAuthorId(String authorId);
 
