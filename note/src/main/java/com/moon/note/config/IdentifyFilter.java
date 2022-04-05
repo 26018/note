@@ -1,18 +1,16 @@
 package com.moon.note.config;
 
 import com.alibaba.fastjson.JSON;
-import com.moon.note.Utils.DesUtil;
+import com.moon.note.utils.DesUtil;
 import com.moon.note.entity.Response;
 import com.moon.note.entity.Result;
 import com.moon.note.entity.UserToken;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;

@@ -1,7 +1,8 @@
 package com.moon.note.controller;
 
-import com.moon.note.Utils.MailUtil;
-import com.moon.note.Utils.StringUtil;
+import com.moon.note.utils.MailUtil;
+import com.moon.note.utils.PasswordCheckUtil;
+import com.moon.note.utils.StringUtil;
 import com.moon.note.config.ExpireTimeConfig;
 import com.moon.note.entity.Response;
 import com.moon.note.entity.Result;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,41 +30,68 @@ public class UserController {
 
     @Resource
     UserService userService;
-
-    @Resource
-    HashMap<String, UserToken> userTokensMap;
-
-    // 上一次请求的时间
+    /**
+     * randomSalt上一次请求的时间
+     */
     long lastSendTime = -1L;
-
     @Resource
     ExpireTimeConfig expireTimeConfig;
-
+    @Resource
+    HashMap<String, UserToken> userTokensMap;
     @Resource
     HashMap<String, Long> verificationCodeMap;
 
-    @GetMapping("/register/sendrandomcode")
+    @GetMapping("/register/randomsalt")
     public Result<String> sendRandomCode(HttpServletRequest request) throws MessagingException, GeneralSecurityException {
         String username = request.getParameter("username");
         long cu = System.currentTimeMillis();
         if (cu - lastSendTime > expireTimeConfig.getRandomSalt()) {
             lastSendTime = cu;
             String randomSalt = StringUtil.randomSalt(6);
-            MailUtil.sendEamil(username, randomSalt);
+            boolean status = MailUtil.sendEmail(username, randomSalt);
+            if (!status) {
+                return new Result<>(Response.FAIL);
+            }
             verificationCodeMap.put(randomSalt, System.currentTimeMillis());
             return new Result<>(Response.SUCCESS);
         }
         // 返回下一次请求时间间隔
         return new Result<>(Response.FAIL, String.valueOf((expireTimeConfig.getRandomSalt() - System.currentTimeMillis() + lastSendTime) / 1000));
     }
+
     @PostMapping("/register")
     public Result<String> userRegister(HttpServletRequest request) {
-        return userService.userRegister(request.getParameter("username"), request.getParameter("password"),request.getParameter("random-salt"));
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String randomSalt = request.getParameter("random-salt");
+        // 参数是否为空校验
+        if (!StringUtil.stringValidCheck(username) || !StringUtil.stringValidCheck(password)) {
+            return new Result<>(Response.PARAMETER_IS_NULL);
+        }
+        // 邮箱格式验证
+        if (!MailUtil.mailValid(username)) {
+            return new Result<>(Response.MAIL_IS_VALID);
+        }
+        // 验证码是否正确及过期校验
+        if (!verificationCodeMap.containsKey(randomSalt) ||
+                System.currentTimeMillis() - verificationCodeMap.get(randomSalt) > expireTimeConfig.getRandomSalt()) {
+            return new Result<>(Response.RANDOMSALT_IS_EXPIRED);
+        }
+        // 密码强弱验证
+        if (!PasswordCheckUtil.evalPassword(password)) {
+            return new Result<>(Response.WEAK_PASSWORD);
+        }
+        return userService.userRegister(username, password);
     }
 
     @PostMapping("/login")
     public Result<String> userLogin(HttpServletRequest request) throws Exception {
-        return userService.userLogin(request.getParameter("username"), request.getParameter("password"));
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        if (!StringUtil.stringValidCheck(username) || !StringUtil.stringValidCheck(password)) {
+            return new Result<>(Response.PARAMETER_IS_NULL);
+        }
+        return userService.userLogin(username, password);
     }
 
     @PostMapping("/logout")

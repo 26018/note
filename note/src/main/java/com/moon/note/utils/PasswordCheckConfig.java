@@ -1,4 +1,4 @@
-package com.moon.note.Utils;
+package com.moon.note.utils;
 
 /**
  * 密码检查配置类
