@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <div id="title">Sign in to Note</div>
+  <div id="signin">
+    <!-- <div id="title">Sign in to Note</div> -->
     <br />
     <div id="content">
-      <div id="subTitle">账号</div>
+      <div id="subTitle">邮箱</div>
       <el-input
         style="width:70%;margin: 0px auto;"
         size="small"
@@ -29,7 +29,7 @@
         >
         <el-button
           style="float: right;width:40%;font-size: 12px;"
-          @click="utils.userRegister(username, password)"
+          @click="utils.navClick('/signup')"
           size="mini"
           type="success"
           >注册</el-button
@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: "login",
+  name: "signin",
   data() {
     return {
       username: "",

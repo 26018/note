@@ -41,9 +41,14 @@ public class UserController {
     @Resource
     HashMap<String, Long> verificationCodeMap;
 
-    @GetMapping("/register/randomsalt")
+    @PostMapping("/register/randomsalt")
     public Result<String> sendRandomCode(HttpServletRequest request) throws MessagingException, GeneralSecurityException {
         String username = request.getParameter("username");
+//        System.out.println(username);
+        // TODO 验证邮箱是否已被注册
+        if (!StringUtil.stringValidCheck(username)) {
+            return new Result<>(Response.PARAMETER_IS_NULL);
+        }
         long cu = System.currentTimeMillis();
         if (cu - lastSendTime > expireTimeConfig.getRandomSalt()) {
             lastSendTime = cu;
@@ -63,7 +68,7 @@ public class UserController {
     public Result<String> userRegister(HttpServletRequest request) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String randomSalt = request.getParameter("random-salt");
+        String randomSalt = request.getParameter("randomsalt");
         // 参数是否为空校验
         if (!StringUtil.stringValidCheck(username) || !StringUtil.stringValidCheck(password)) {
             return new Result<>(Response.PARAMETER_IS_NULL);

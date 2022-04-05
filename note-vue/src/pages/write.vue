@@ -1,7 +1,9 @@
 <template>
   <div id="write" ref="pronbit">
     <div class="writeBoxOBJ">
-      <p>{{ poems }}</p>
+      <div class="poembox">
+        <p>{{ poems }}</p>
+      </div>
       <textarea
         :placeholder="sentence"
         class="writeBox"
@@ -107,20 +109,36 @@ export default {
 
 /* 第一个框 */
 @media only screen and (max-device-width: 768px) {
+  .poembox {
+    height: 30px;
+    /* border: 1px saddlebrown solid; */
+  }
+  .writeBox {
+    font-family: Github;
+    font-size: 16px;
+    width: 100%;
+    height: 90%;
+    resize: none;
+    border: 0px;
+    outline: none;
+    /* border: 1px slateblue solid; */
+  }
+
   .writeBoxOBJ {
     /* border: 1px purple solid; */
     margin: 0 auto;
     width: 90%;
-    height: 80%;
+    height: 100%;
   }
 
   p {
+    padding: 0;
+    margin: 0;
     text-align: center;
     width: 100%;
     border-radius: 3px;
     background-color: gainsboro;
     color: gray;
-    margin-bottom: 10px;
   }
 
   .saveBtn {
@@ -130,15 +148,6 @@ export default {
     position: absolute;
   }
 
-  .writeBox {
-    font-family: Github;
-    font-size: 16px;
-    width: 100%;
-    height: 95%;
-    resize: none;
-    border: 0px;
-    outline: none;
-  }
   .writeBox::-webkit-scrollbar {
     width: 0;
   }

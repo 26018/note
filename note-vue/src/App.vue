@@ -1,19 +1,30 @@
 <template>
   <div id="app">
-    <index />
+    <home />
     <router-view class="routerView" ref="child" />
   </div>
 </template>
 
 <script>
-import index from "./pages/index.vue";
+import home from "./pages/home.vue";
 export default {
   name: "App",
-  components: { index },
+  components: { home },
   data() {
     return {};
   }
 };
 </script>
 
-<style></style>
+<style>
+.routerView {
+  width: 100%;
+  height: 90%;
+  /* border: 1px saddlebrown solid; */
+  overflow: scroll;
+}
+
+.routerView::-webkit-scrollbar {
+  width: 0;
+}
+</style>

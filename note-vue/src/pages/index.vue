@@ -1,103 +1,90 @@
 <template>
-  <div id="index">
-    <div class="index">
-      <div
-        @click="utils.navClick('/write')"
-        @dblclick="utils.noteSave(noteSaveCallBack)"
-        class="block"
-      >
-        ✍️
+  <div>
+    <!-- <div id="title">Sign in to Note</div>
+    <br />
+    <div id="content">
+      <div id="subTitle">账号</div>
+      <el-input
+        style="width:70%;margin: 0px auto;"
+        size="small"
+        v-model="username"
+        placeholder="请输入账号"
+      ></el-input>
+      <div id="subTitle">密码</div>
+      <el-input
+        style="width:70%;margin: 0px auto;"
+        size="small"
+        placeholder="请输入密码"
+        v-model="password"
+        show-password
+      ></el-input>
+      <br />
+      <div class="btnDiv">
+        <el-button
+          style="float: left;width:40%;font-size: 12px;"
+          @click="utils.userLogin(username, password)"
+          size="mini"
+          type="primary"
+          >登录</el-button
+        >
+        <el-button
+          style="float: right;width:40%;font-size: 12px;"
+          @click="utils.userRegister(username, password)"
+          size="mini"
+          type="success"
+          >注册</el-button
+        >
       </div>
-      <div
-        class="block"
-        id="settingIcon"
-        @dblclick="utils.navClick('/setting')"
+    </div> -->
+
+    <!-- <div class="navbar">
+      <router-link to="/index/signin" class="block" style="float:left">
+        Sign in
+      </router-link>
+      <router-link to="/index/signup" class="block" style="float:right">
+        Sign up</router-link
       >
-        🎉
-      </div>
-      <div @click="utils.navClick('/read')" class="block">📖</div>
     </div>
-    <router-view class="routerView" ref="child" />
+    <router-view class="abc" /> -->
   </div>
 </template>
 
 <script>
 export default {
-  name: "index",
+  name: "login",
   data() {
     return {};
-  },
-  methods: {
-    noteSaveCallBack() {
-      // this.$refs.child.$refs.poemBox.focus();
-      localStorage.removeItem("unSavePoemString");
-      this.$refs.child.poemString = "";
-    }
   }
 };
 </script>
 
-<style>
-:root {
-  --baseline: 8vh;
-}
-
-* {
-  padding: 0;
-  margin: 0;
-}
-
-body {
+<style scoped>
+.abc {
+  /* border: 1px saddlebrown solid; */
+  height: 90%;
+  /* background-color: red; */
   width: 100%;
-  height: 100%;
 }
-
-.el-message {
-  min-width: 90% !important;
-}
-
-.el-message-box {
-  width: 90% !important;
-}
-
-#index {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  position: relative;
+.navbar {
+  margin: 0 auto;
+  height: 40px;
+  width: 80%;
+  background-color: #f6f8fa;
+  /* border: 1px salmon solid; */
 }
 
 .block {
-  width: 20%;
-  height: 100%;
   display: inline-block;
-  text-align: center;
-  line-height: var(--baseline);
-  font-size: 20px;
-  user-select: none;
-}
-
-.index {
-  /* border: 1px solid ; */
-  user-select: none;
-  width: 100%;
-  height: var(--baseline);
-  top: 0;
-  position: fixed;
+  width: 30%;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  line-height: 200%;
+  /* border: 1px saddlebrown solid; */
   text-align: center;
   text-decoration: none;
-}
+  color: brown;
 
-.routerView {
-  margin-top: var(--baseline);
-  width: 100%;
-  position: fixed;
-  height: 94vh;
-  overflow: scroll;
-}
-
-.routerView::-webkit-scrollbar {
-  width: 0;
+  border-radius: 10%;
 }
 </style>

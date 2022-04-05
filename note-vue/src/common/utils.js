@@ -99,14 +99,16 @@ export default {
     });
   },
   // 用户注册
-  userRegister(username, password) {
+  userRegister(username, password, randomsalt) {
     if (
       username == null ||
       username.trim() == "" ||
       password == null ||
-      password.trim() == ""
+      password.trim() == "" ||
+      randomsalt == null ||
+      randomsalt.trim() == ""
     ) {
-      this.floatMessage("账号密码不能为空", "error", 2000, true);
+      this.floatMessage("账号、验证码、密码不能为空", "error", 2000, true);
       return;
     }
     axios({
@@ -114,16 +116,41 @@ export default {
       method: "post",
       data: {
         username: username,
-        password: password
+        password: password,
+        randomsalt: randomsalt
       }
     }).then(result => {
       if (result.data.code != 200) {
         this.floatMessage(result.data.message.toLowerCase(), "error", 2000);
       } else {
-        this.floatMessage(result.data.message.toLowerCase(), "success", 2000);
+        this.floatMessage("注册成功，请返回登录", "success", 2000);
       }
     });
   },
+
+  randomSalt(username) {
+    if (username == null || username.trim() == "") {
+      this.floatMessage("账号不能为空", "error", 2000, true);
+      return;
+    }
+    let that = this;
+    axios({
+      url: "/api/users/register/randomsalt",
+      method: "post",
+      data: {
+        username: username
+      }
+    })
+      .then(res => {
+        if (res.data.code == 200) {
+          that.floatMessage("验证码获取成功", "success", 2000, true);
+        }
+      })
+      .catch(res => {
+        that.floatMessage(res, "error", 2000, true);
+      });
+  },
+
   // 自定义提示信息
   floatMessage(msg, type, du, close) {
     Message({

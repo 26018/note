@@ -17,12 +17,12 @@ axios.defaults.withCredentials = true;
 
 // 全局监听是否登录
 router.beforeEach((to, from, next) => {
-  //这里能够跟踪路径的变化
+  // 这里能够跟踪路径的变化;
   var token = localStorage.getItem("token");
-  if (token != null || to.path == "/login" || to.path == "/register") {
+  if (token != null || to.path.includes("/sign")) {
     next();
   } else {
-    next("/login");
+    next("/signin");
   }
 });
 
