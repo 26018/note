@@ -24,12 +24,12 @@ public class BeanConfig {
 
     /**
      * 验证码集合
-     * key = code
-     * value = expireTime
+     * key: userMail
+     * value: random:timestamp
      */
 
     @Bean
-    HashMap<String, Long> verificationCodeMap() {
+    HashMap<String, String> verificationCodeMap() {
         return new HashMap<>(16);
     }
 

@@ -53,4 +53,8 @@ public class UserService {
         // 修改密码
         return null;
     }
+
+    public boolean userValidCheck(String username) {
+        return userDao.selectUserByUsername(username) == null;
+    }
 }

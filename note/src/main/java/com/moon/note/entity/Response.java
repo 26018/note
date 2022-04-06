@@ -20,11 +20,13 @@ public enum Response {
     USER_NOT_LOGIN(550, "user not login"),
     USER_ALREADY_EXISTS(560,"user already exist"),
     WEAK_PASSWORD(570,"wake password"),
-    MAIL_IS_VALID(580,"mail is valid"),
+    MAIL_IS_INVALID(580,"mail is invalid"),
 
     TOKEN_IS_VALID(600,"token is valid"),
     TOKEN_IS_EXPIRED(610,"token is expired"),
     RANDOMSALT_IS_EXPIRED(620,"randomSalt is expired"),
+    RANDOMSALT_IS_ERROR(630,"randomSalt is error"),
+    REPEAT_REQUEST(640,"repeat request"),
     SUCCESS(200, "success"),
     ;
 

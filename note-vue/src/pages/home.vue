@@ -39,13 +39,6 @@ export default {
 ::root {
   --baseline: 8vh;
 }
-/* .el-message {
-  min-width: 90% !important;
-}
-
-.el-message-box {
-  width: 90% !important;
-} */
 
 #home {
   /* border: 1px salmon solid; */

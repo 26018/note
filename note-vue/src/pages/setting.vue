@@ -35,13 +35,6 @@ export default {
   height: 90%;
 }
 
-.el-message {
-  min-width: 90% !important;
-}
-
-.el-message-box {
-  width: 90% !important;
-}
 .poemKfram {
   width: 90%;
   margin: 0 auto;

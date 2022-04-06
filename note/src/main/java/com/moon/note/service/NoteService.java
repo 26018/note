@@ -5,8 +5,10 @@ import com.moon.note.entity.Note;
 import com.moon.note.entity.Response;
 import com.moon.note.entity.Result;
 import com.moon.note.mapper.NoteDao;
+import com.moon.note.utils.StringUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.sql.Struct;
 
 /**
  * @author JinHui
@@ -32,7 +34,7 @@ public class NoteService {
     }
 
     public Result<String> noteUpdate(String noteString, String id) {
-        if (noteString == null || id == null) {
+        if (!StringUtil.valid(noteString, id)) {
             return new Result<>(Response.PARAMETER_IS_NULL);
         }
         return returnCountCheck(noteDao.updateNote(new Note(Long.parseLong(id), noteString)));

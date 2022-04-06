@@ -81,20 +81,25 @@ export default {
       utils.poems(res => {
         pb = new Object();
         currentIdx = 0;
+        let obj = JSON.parse(res.data.data);
+        let index = obj[0]["index"];
+        console.log("return Index:" + index);
         pb["createTime"] = Date.parse(new Date());
-        pb["data"] = JSON.parse(res.data.data);
+        pb["data"] = obj[1];
         pb["expiredTime"] = 86400000;
+        localStorage.setItem("index", index);
         localStorage.setItem("currentIdx", currentIdx);
         localStorage.setItem("poemBox", JSON.stringify(pb));
       });
     }
 
     this.poems = pb == null ? this.poems : pb["data"][++currentIdx]["sentence"];
+
     setInterval(() => {
       if (currentIdx >= pb["data"].length - 1) {
         currentIdx = 0;
       }
-      this.poems = pb["data"][++currentIdx]["sentence"];
+      this.poems = pb["data"][1][++currentIdx]["sentence"];
       localStorage.setItem("currentIdx", currentIdx);
     }, 8000);
   }

@@ -42,7 +42,6 @@ axios.interceptors.request.use(config => {
     config.data = qs.stringify(config.data);
   }
   config.headers["token"] = localStorage.getItem("token");
-  // console.log(config);
   return config;
 });
 

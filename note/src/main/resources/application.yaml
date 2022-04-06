@@ -9,6 +9,6 @@ spring:
 
 expire:
   token: 604800000 # 一周
-  randomSalt: 60000
+  randomSalt: 3600000 # 一个小时
 
 poemCount: 50

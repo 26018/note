@@ -50,6 +50,7 @@ export default {
       method: "get"
     })
       .then(result => {
+        console.log(result);
         callback(JSON.parse(result.data.data));
       })
       .catch(err => {
@@ -58,9 +59,17 @@ export default {
   },
   // 请求所有的poem,
   poems(callback) {
+    let index = localStorage.getItem("index");
+    console.log("index:" + index);
+    if (index == null) {
+      index = 0;
+    }
     axios({
       url: "/api/poem/poems",
-      method: "get"
+      method: "post",
+      data: {
+        index: index
+      }
     }).then(res => {
       callback(res);
     });
@@ -142,8 +151,11 @@ export default {
       }
     })
       .then(res => {
+        console.log(res);
         if (res.data.code == 200) {
-          that.floatMessage("验证码获取成功", "success", 2000, true);
+          that.floatMessage(res.data.message, "success", 2000, true);
+        } else {
+          that.floatMessage(res.data.message, "warning", 2000, true);
         }
       })
       .catch(res => {
@@ -211,7 +223,7 @@ export default {
   },
   // 单次点击导航
   navClick(path) {
-    router.push(path);
+    router.replace(path);
   },
 
   // 保存数据到浏览器

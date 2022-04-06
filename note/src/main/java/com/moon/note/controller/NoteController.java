@@ -5,6 +5,7 @@ import com.moon.note.entity.Response;
 import com.moon.note.entity.Result;
 import com.moon.note.entity.UserToken;
 import com.moon.note.service.NoteService;
+import com.moon.note.utils.StringUtil;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 public class NoteController {
 
     @Resource
-    private NoteService noteService;
+    NoteService noteService;
 
     @Resource
     HashMap<String, UserToken> userTokensMap;
@@ -31,7 +32,7 @@ public class NoteController {
     @PostMapping("/notes")
     public Result<String> insertNote(HttpServletRequest request) {
         final String noteString = request.getParameter("noteString");
-        if (noteString.trim().length() == 0) {
+        if (!StringUtil.valid(noteString)) {
             return new Result<>(Response.PARAMETER_IS_NULL);
         }
         return noteService.insertNote(new Note(noteString, userTokensMap.get(request.getHeader("token")).getUser().getId()));

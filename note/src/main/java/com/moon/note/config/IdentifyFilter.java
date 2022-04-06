@@ -5,6 +5,7 @@ import com.moon.note.utils.DesUtil;
 import com.moon.note.entity.Response;
 import com.moon.note.entity.Result;
 import com.moon.note.entity.UserToken;
+import com.moon.note.utils.StringUtil;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
@@ -34,7 +35,6 @@ public class IdentifyFilter implements Filter {
 
     @Resource
     ExpireTimeConfig expireTimeConfig;
-//    long expireTime;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -56,12 +56,11 @@ public class IdentifyFilter implements Filter {
         ServletOutputStream writer = servletResponse.getOutputStream();
         String token = request.getHeader("token");
         // 未携带token直接返回
-        if (token == null) {
+        if (!StringUtil.valid(token)) {
             writer.write(JSON.toJSONString(new Result<>(Response.USER_NOT_LOGIN)).getBytes());
             writer.close();
             return;
         }
-
         // 生成的token包含+号，发送到前端通过url传到服务端的过程中，+号会被解析为空格
         token = token.replaceAll(" ", "+");
         UserToken userToken;

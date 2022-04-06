@@ -1,5 +1,6 @@
 package com.moon.note.utils;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 /**
@@ -9,15 +10,21 @@ import java.util.Random;
 
 public class StringUtil {
 
-     static String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz_0123456789=+";
+    static String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-    public static boolean stringValidCheck(String str) {
-        return str != null && str.trim().length() != 0;
+    static Random random = new SecureRandom();
+
+    public static boolean valid(String... strings) {
+        for (String str : strings) {
+            if (str == null || str.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static String randomSalt(int len) {
         StringBuilder stringBuilder = new StringBuilder();
-        Random random = new Random();
         int length = base.length();
         for (int i = 0; i < len; i++) {
             stringBuilder.append(base.charAt(random.nextInt(length)));
