@@ -34,12 +34,14 @@ public class UserController {
     @Resource
     HashMap<String, UserToken> userTokensMap;
 
-
     @PostMapping("/register/randomsalt")
     public Result<String> sendRandomCode(HttpServletRequest request) throws MessagingException {
         String username = request.getParameter("username");
         if (!StringUtil.valid(username)) {
             return new Result<>(Response.PARAMETER_IS_NULL);
+        }
+        if (!mailUtil.mailValid(username)) {
+            return new Result<>(Response.MAIL_IS_INVALID);
         }
         // 该邮箱请求在过期时间内
         if (!randomSaltUtil.userRequestValid(username)) {
