@@ -33,7 +33,7 @@ public class RandomSaltUtil {
      * 解析map里code+time的字符串
      */
     private RandomSaltAndExpireTime parse(String str) {
-        if (!StringUtil.valid(str)) {
+        if (str == null) {
             return null;
         }
         String[] split = str.split(":");
@@ -56,9 +56,6 @@ public class RandomSaltUtil {
     }
 
     public boolean randomSaltValid(String mail, String randomSalt) {
-        if (!StringUtil.valid(mail, randomSalt)) {
-            return false;
-        }
         // 验证码错误
         RandomSaltAndExpireTime parse = parse(verificationCodeMap.get(mail));
         if (parse == null || !randomSalt.equals(parse.randomSalt)) {

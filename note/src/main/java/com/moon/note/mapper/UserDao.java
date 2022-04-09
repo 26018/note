@@ -19,7 +19,7 @@ public interface UserDao {
 
     @ResultType(Boolean.class)
     @Insert("insert users(username,password) values(#{username},AES_ENCRYPT((#{password}),'lsk-art'))")
-    Boolean insertUser(String username,String password);
+    Boolean insertUser(User user);
 
     @ResultType(Boolean.class)
     Boolean userChange();

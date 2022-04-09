@@ -27,5 +27,8 @@ class Result<T> {
         this.message = r.getMessage();
         this.data = data;
     }
-
+    public Result(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 }

@@ -24,7 +24,7 @@ public class SaticScheduleTask {
     ExpireTimeConfig expireTimeConfig;
     static Stack<String> stack = new Stack<>();
 
-    // 每天凌晨执行
+    // 每天凌晨1点执行
 
     @Scheduled(cron = "0 0 1 * * ?")
     private void configureTasks() {

@@ -34,9 +34,6 @@ public class NoteService {
     }
 
     public Result<String> noteUpdate(String noteString, String id) {
-        if (!StringUtil.valid(noteString, id)) {
-            return new Result<>(Response.PARAMETER_IS_NULL);
-        }
         return returnCountCheck(noteDao.updateNote(new Note(Long.parseLong(id), noteString)));
     }
 

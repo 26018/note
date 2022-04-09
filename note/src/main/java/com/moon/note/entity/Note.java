@@ -2,6 +2,7 @@ package com.moon.note.entity;
 
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -14,7 +15,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class Note {
     long id;
+    @NotNull(message = "标题不能为空")
     String title;
+    @NotNull(message = "内容不能为空")
     String content;
     Date time;
     long authorId;

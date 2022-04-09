@@ -14,15 +14,6 @@ public class StringUtil {
 
     static Random random = new SecureRandom();
 
-    public static boolean valid(String... strings) {
-        for (String str : strings) {
-            if (str == null || str.isEmpty()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public static String randomSalt(int len) {
         StringBuilder stringBuilder = new StringBuilder();
         int length = base.length();

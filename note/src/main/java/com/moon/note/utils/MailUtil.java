@@ -80,10 +80,6 @@ public class MailUtil {
 
     public boolean sendRandomSaltToUser(String mail) throws MessagingException {
         returnMessage = null;
-        if (!StringUtil.valid(mail)) {
-            returnMessage = new Result<>(Response.PARAMETER_IS_NULL);
-            return false;
-        }
         String randomCode = StringUtil.randomSalt(6);
         boolean sendEmail = sendEmail(mail, randomCode);
         if (!sendEmail) {

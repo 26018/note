@@ -23,30 +23,29 @@ public class UserService {
     @Resource
     HashMap<String, UserToken> userTokensMap;
 
-    public Result<String> userLogin(String username, String password) throws Exception {
-        User user = userDao.selectUserByUsername(username);
-        if (user != null && password.equals(user.getPassword())) {
+    public User getByToken(String token) {
+        return userTokensMap.getOrDefault(token, null).getUser();
+    }
+
+    public Result<String> userLogin(User user) throws Exception {
+        User u = userDao.selectUserByUsername(user.getUsername());
+        if (u != null && user.getPassword().equals(u.getPassword())) {
             // 清除密码，避免token中出现用户密码
             user.setPassword("");
             UserToken userToken = new UserToken(user, System.currentTimeMillis());
-            String s = JSON.toJSONString(userToken);
-            String token = DesUtil.encrypt(s);
+            String token = DesUtil.encrypt(JSON.toJSONString(userToken));
             userTokensMap.put(token, userToken);
             return new Result<>(Response.SUCCESS, token);
         }
         return new Result<>(Response.USER_NOT_REGISTER);
     }
 
-    public Result<String> userRegister(String username, String password) {
-        User user = userDao.selectUserByUsername(username);
-        if (user != null) {
+    public Result<String> userRegister(User user) {
+        if (userExist(user.getUsername())) {
             return new Result<>(Response.USER_ALREADY_EXISTS);
         }
-        Boolean insertUser = userDao.insertUser(username, password);
-        if (!insertUser) {
-            return new Result<>(Response.FAIL);
-        }
-        return new Result<>(Response.SUCCESS);
+        Boolean insertUser = userDao.insertUser(user);
+        return insertUser ? new Result<>(Response.SUCCESS) : new Result<>(Response.FAIL);
     }
 
     public Result<String> userPasswordChange(String id) {
@@ -54,7 +53,7 @@ public class UserService {
         return null;
     }
 
-    public boolean userValidCheck(String username) {
-        return userDao.selectUserByUsername(username) == null;
+    public boolean userExist(String username) {
+        return userDao.selectUserByUsername(username) != null;
     }
 }
