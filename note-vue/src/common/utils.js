@@ -68,7 +68,7 @@ export default {
     // 用户登录
     userLogin(username, password) {
         if (username == null || username.trim() == '' || password == null || password.trim() == '') {
-            this.floatMessage('账号密码不能为空', 'error', 2000, true);
+            this.floatMessage('账号，密码不能为空', 'error', 2000, true);
             return;
         }
 

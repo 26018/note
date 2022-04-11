@@ -1,16 +1,17 @@
 package com.moon.note.controller;
 
-import com.moon.note.entity.*;
+import com.alibaba.fastjson.JSON;
+import com.moon.note.entity.Note;
+import com.moon.note.entity.Response;
+import com.moon.note.entity.Result;
+import com.moon.note.entity.User;
 import com.moon.note.service.NoteService;
 import com.moon.note.service.UserService;
-import com.moon.note.utils.StringUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author MoonLight
@@ -25,26 +26,35 @@ public class NoteController {
     UserService userService;
 
     @GetMapping("/notes")
-    public Result<String> notes(
-            @NotBlank(message = "token不能为空") @RequestHeader String token) {
-        return noteService.notes(userService.getByToken(token).getId());
+    public Result<String> notes(@NotBlank(message = "token不能为空")
+                                @RequestHeader String token) {
+        User user = userService.getByToken(token);
+        List<Note> notes = noteService.allNotes(String.valueOf(user.getId()));
+        return new Result<>(Response.SUCCESS, JSON.toJSONString(notes));
     }
 
     @PostMapping("/notes")
-    public Result<String> insertNote(
+    public Result<String> insert(
             @NotBlank(message = "token不能为空") @RequestHeader String token,
             @NotBlank(message = "note为不能空") @RequestParam String noteString) {
-        return noteService.insertNote(new Note(noteString, userService.getByToken(token).getId()));
+        User user = userService.getByToken(token);
+        noteService.insert(new Note(noteString, user.getId()));
+        return new Result<>(Response.SUCCESS);
     }
 
     @DeleteMapping("/notes/{noteId}")
-    public Result<String> deleteNote(@NotBlank(message = "noteId不能为空") @PathVariable("noteId") String noteId) {
-        return noteService.deleteNoteById(noteId);
+    public Result<String> delete(@NotBlank(message = "noteId不能为空")
+                                 @PathVariable("noteId") String noteId) {
+        noteService.deleteById(noteId);
+        return new Result<>(Response.SUCCESS);
     }
 
     @PutMapping("/notes/{noteId}")
-    public Result<String> noteUpdate(@NotBlank(message = "note不能为空") @RequestParam String noteString,
-                                     @NotBlank(message = "noteId不能为空") @PathVariable("noteId") String noteId) {
-        return noteService.noteUpdate(noteString, noteId);
+    public Result<String> update(@NotBlank(message = "note不能为空")
+                                 @RequestParam String noteString,
+                                 @NotBlank(message = "noteId不能为空")
+                                 @PathVariable("noteId") String noteId) {
+        noteService.update(noteString, noteId);
+        return new Result<>(Response.SUCCESS);
     }
 }

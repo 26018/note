@@ -5,17 +5,20 @@ import com.alibaba.fastjson.JSONArray;
 import com.moon.note.entity.Response;
 import com.moon.note.entity.Result;
 import com.moon.note.mapper.PoemDao;
-import net.sf.jsqlparser.statement.create.table.Index;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
-import springfox.documentation.spring.web.json.Json;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author MoonLight
+ */
 @RestController()
 @RequestMapping("/poem")
 public class PoemController {

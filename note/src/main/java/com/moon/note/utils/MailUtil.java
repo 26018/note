@@ -1,23 +1,14 @@
 package com.moon.note.utils;
 
-import com.moon.note.entity.Response;
-import com.moon.note.entity.Result;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.xml.soap.SAAJMetaFactory;
-import java.util.HashMap;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 /**
  * @author MoonLight
  */
 
-@Component
 public class MailUtil {
     //创建一个配置文件并保存
     static Properties properties = new Properties();
@@ -27,17 +18,13 @@ public class MailUtil {
     static Transport transport;
     static MimeMessage mimeMessage;
 
-    Result<String> returnMessage;
-    @Resource
-    HashMap<String, String> verificationCodeMap;
-
     static {
         properties.setProperty("mail.host", "smtp.qq.com");
         properties.setProperty("mail.transport.protocol", "smtp");
         properties.setProperty("mail.smtp.auth", "true");
     }
 
-    private boolean sendEmail(String userMail, String randomCode) throws MessagingException {
+    private static boolean sendEmailToUser(String userMail, String randomCode) {
         String content = "Hey " + userMail +
                 "<br><br>Your Verification code:<a><strong>" + randomCode +
                 "</strong></a><br><br>Thanks,<br>The Note Team";
@@ -78,23 +65,18 @@ public class MailUtil {
         return true;
     }
 
-    public boolean sendRandomSaltToUser(String mail) throws MessagingException {
-        returnMessage = null;
-        String randomCode = StringUtil.randomSalt(6);
-        boolean sendEmail = sendEmail(mail, randomCode);
+    public static boolean send(String mail, String randomCode) {
+        boolean sendEmail = sendEmailToUser(mail, randomCode);
         if (!sendEmail) {
-            returnMessage = new Result<>(Response.FAIL);
             return false;
         }
-        verificationCodeMap.put(mail, randomCode + ":" + System.currentTimeMillis());
-        returnMessage = new Result<>(Response.SUCCESS);
         return true;
     }
 
-    public boolean mailValid(String mail) {
-        if (mail != null && !mail.isEmpty()) {
-            return Pattern.matches("^(\\w+([-.][A-Za-z0-9]+)*){3,18}@\\w+([-.][A-Za-z0-9]+)*\\.\\w+([-.][A-Za-z0-9]+)*$", mail);
-        }
-        return false;
-    }
+//    public boolean mailValid(String mail) {
+//        if (mail != null && !mail.isEmpty()) {
+//            return Pattern.matches("^(\\w+([-.][A-Za-z0-9]+)*){3,18}@\\w+([-.][A-Za-z0-9]+)*\\.\\w+([-.][A-Za-z0-9]+)*$", mail);
+//        }
+//        return false;
+//    }
 }

@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
-import java.util.Properties;
 
 /**
  * @author JinHui
@@ -27,7 +26,6 @@ public class BeanConfig {
      * key: userMail
      * value: random:timestamp
      */
-
     @Bean
     HashMap<String, String> verificationCodeMap() {
         return new HashMap<>(16);

@@ -1,25 +1,22 @@
 package com.moon.note.controller;
 
-import com.moon.note.entity.User;
-import com.moon.note.utils.MailUtil;
-import com.moon.note.utils.PasswordCheckUtil;
-import com.moon.note.utils.RandomSaltUtil;
-import com.moon.note.utils.StringUtil;
 import com.moon.note.entity.Response;
 import com.moon.note.entity.Result;
-import com.moon.note.entity.UserToken;
+import com.moon.note.entity.User;
+import com.moon.note.service.MailService;
 import com.moon.note.service.UserService;
+import com.moon.note.utils.StringUtil;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import javax.validation.constraints.AssertFalse;
-import javax.validation.constraints.AssertTrue;
-import java.util.HashMap;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author JinHui
@@ -29,61 +26,31 @@ import java.util.HashMap;
 @RequestMapping("/users")
 public class UserController {
 
-    @Resource
-    MailUtil mailUtil;
-    @Resource
-    RandomSaltUtil randomSaltUtil;
+//    @Resource
+//    RandomSaltUtil randomSaltUtil;
     @Resource
     UserService userService;
+    @Resource
+    MailService mailService;
 
     @PostMapping("/register/randomsalt")
-    public Result<String> sendRandomCode(User user) throws MessagingException {
-        // 该邮箱请求在过期时间内
-        if (!randomSaltUtil.userRequestValid(user.getUsername())) {
-            return new Result<>(Response.REPEAT_REQUEST);
-        }
-        // 邮箱是否已被注册验证
-        if (userService.userExist(user.getUsername())) {
+    public Result<String> sendRandomCode(@Email(message = "邮箱格式错误") String username, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (userService.exist(username)) {
             return new Result<>(Response.USER_ALREADY_EXISTS);
         }
-        // 发送验证码
-        return mailUtil.sendRandomSaltToUser(user.getUsername()) ? new Result<>(Response.SUCCESS) : new Result<>(Response.FAIL);
+        mailService.sendMail(username, null, StringUtil.randomSalt(6));
+        return new Result<>(Response.SUCCESS);
     }
 
     @PostMapping("/register")
-    public Result<String> userRegister(User user, @RequestParam String randomsalt) {
-        // 验证码错误
-        if (!randomSaltUtil.randomSaltValid(user.getUsername(), randomsalt)) {
-            return new Result<>(Response.RANDOMSALT_IS_ERROR);
-        }
-        // 密码较弱
-        if (!PasswordCheckUtil.evalPassword(user.getPassword())) {
-            return new Result<>(Response.WEAK_PASSWORD);
-        }
-        return userService.userRegister(user);
+    public Result<String> register(@Validated User user, @NotBlank(message = "验证码不能为空") @RequestParam String randomsalt) throws Exception {
+        userService.register(user, randomsalt);
+        return new Result<>(Response.SUCCESS);
     }
 
     @PostMapping("/login")
-    public Result<String> userLogin(@Valid User user) throws Exception {
-        return userService.userLogin(user);
+    public Result<String> login(@Validated User user) throws Exception {
+        String token = userService.login(user);
+        return new Result<>(Response.SUCCESS, token);
     }
-
-
-
-
-
-
-    @PostMapping("/logout")
-    public Result<String> userLogout(HttpServletRequest request, HttpServletResponse response) {
-        // TODO 将token销毁
-
-        return null;
-    }
-
-    @PostMapping("/password-change")
-    public Result<String> userPasswordChange(HttpServletRequest request) {
-        // TODO
-        return userService.userPasswordChange("");
-    }
-
 }

@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class StringUtil {
 
-    static String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    static String base = "0123456789";
 
     static Random random = new SecureRandom();
 

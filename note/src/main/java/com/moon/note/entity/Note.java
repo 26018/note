@@ -30,9 +30,9 @@ public class Note {
         this.content = titleAndContent[1];
     }
 
-    public Note(long id, String noteString) {
+    public Note(long noteId, String noteString) {
         String[] titleAndContent = getTitleAndContent(noteString);
-        this.id = id;
+        this.id = noteId;
         this.title = titleAndContent[0];
         this.content = titleAndContent[1];
     }

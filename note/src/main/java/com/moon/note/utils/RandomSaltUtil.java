@@ -1,24 +1,13 @@
 package com.moon.note.utils;
 
-import com.moon.note.config.ExpireTimeConfig;
-import com.moon.note.entity.Response;
-import com.moon.note.entity.Result;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
-import javax.mail.MessagingException;
 import java.util.HashMap;
 
 /**
  * @author MoonLight
  */
-@Component
 public class RandomSaltUtil {
 
-    @Resource
-    HashMap<String, String> verificationCodeMap;
-    @Resource
-    ExpireTimeConfig expireTimeConfig;
+    public static HashMap<String, String> randoms;
 
     private static class RandomSaltAndExpireTime {
         String randomSalt;
@@ -29,10 +18,11 @@ public class RandomSaltUtil {
             this.lastTime = lastTime;
         }
     }
+
     /**
      * 解析map里code+time的字符串
      */
-    private RandomSaltAndExpireTime parse(String str) {
+    private static RandomSaltAndExpireTime parse(String str) {
         if (str == null) {
             return null;
         }
@@ -43,25 +33,25 @@ public class RandomSaltUtil {
     /**
      * 过期是指超过规定时间
      */
-    private Boolean expire(String mail) {
-        if (!verificationCodeMap.containsKey(mail)) {
+    private static Boolean expire(String mail,long expire) {
+        if (!randoms.containsKey(mail)) {
             return true;
         }
-        RandomSaltAndExpireTime parse = parse(verificationCodeMap.get(mail));
-        return parse != null && System.currentTimeMillis() - parse.lastTime > expireTimeConfig.getRandomSalt();
+        RandomSaltAndExpireTime parse = parse(randoms.get(mail));
+        return parse != null && System.currentTimeMillis() - parse.lastTime > expire;
     }
 
-    public boolean userRequestValid(String mail) {
-        return expire(mail);
+    public static boolean userRequestValid(String mail,long expire) {
+        return expire(mail, expire);
     }
 
-    public boolean randomSaltValid(String mail, String randomSalt) {
+    public static boolean valid(String mail, String randomSalt) {
+        RandomSaltAndExpireTime parse = parse(randoms.get(mail));
         // 验证码错误
-        RandomSaltAndExpireTime parse = parse(verificationCodeMap.get(mail));
         if (parse == null || !randomSalt.equals(parse.randomSalt)) {
             return false;
         }
-        verificationCodeMap.remove(mail);
+        randoms.remove(mail);
         return true;
     }
 

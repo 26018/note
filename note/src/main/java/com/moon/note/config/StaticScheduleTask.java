@@ -16,7 +16,7 @@ import java.util.Stack;
 @Configuration
 // 2.开启定时任务
 @EnableScheduling
-public class SaticScheduleTask {
+public class StaticScheduleTask {
 
     @Resource
     HashMap<String, String> verificationCodeMap;
