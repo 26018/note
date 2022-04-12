@@ -13,8 +13,8 @@ export default new Router({
         { path: '/write', component: () => import('../pages/write.vue') },
         { path: '/read', component: () => import('../pages/read.vue') },
         { path: '/setting', component: () => import('../pages/setting.vue') },
-        { path: '/signup', component: () => import('../components/signup.vue') },
-        { path: '/signin', component: () => import('../components/signin.vue') },
+        { path: '/signup', component: () => import('../pages/signup.vue') },
+        { path: '/signin', component: () => import('../pages/signin.vue') },
         {
             path: '*',
             name: 'NotFound',

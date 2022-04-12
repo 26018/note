@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import utils from '../common/utils';
 export default {
     name: 'write',
     data() {

@@ -34,7 +34,7 @@ public class UserController {
     MailService mailService;
 
     @PostMapping("/register/randomsalt")
-    public Result<String> sendRandomCode(@Email(message = "邮箱格式错误") String username, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public Result<String> sendRandomCode(@Email(message = "邮箱格式错误") @NotBlank(message = "邮箱不能为空") String username, HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (userService.exist(username)) {
             return new Result<>(Response.USER_ALREADY_EXISTS);
         }

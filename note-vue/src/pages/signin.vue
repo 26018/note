@@ -9,14 +9,16 @@
             <el-input style="width:70%;margin: 0px auto;" size="small" placeholder="请输入密码" v-model="password" show-password></el-input>
             <br />
             <div class="btnDiv">
-                <el-button style="float: left;width:40%;font-size: 12px;" @click="utils.userLogin(username, password)" size="mini" type="primary">登录</el-button>
-                <el-button style="float: right;width:40%;font-size: 12px;" @click="utils.navClick('/signup')" size="mini" type="success">注册</el-button>
+                <el-button style="float: left;width:40%;font-size: 12px;" @click="userLogin" size="mini" type="primary">登录</el-button>
+                <el-button style="float: right;width:40%;font-size: 12px;" @click="navClick('/signup')" size="mini" type="success">注册</el-button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { login } from '../common/user';
+import { navClick } from '../common/util';
 export default {
     name: 'signin',
     data() {
@@ -24,6 +26,17 @@ export default {
             username: '',
             password: '',
         };
+    },
+    methods: {
+        userLogin() {
+            login(this.username, this.password).then((res) => {
+                localStorage.setItem('token', res.data);
+                navClick('/');
+            });
+        },
+        navClick(path) {
+            navClick(path);
+        },
     },
 };
 </script>

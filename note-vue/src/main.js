@@ -5,10 +5,9 @@ import axios from 'axios';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import write from './pages/write.vue';
-import utils from './common/utils';
 import qs from 'qs';
+import { Message } from 'element-ui';
 
-Vue.prototype.utils = utils;
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
@@ -44,6 +43,33 @@ axios.interceptors.request.use((config) => {
     config.headers['token'] = localStorage.getItem('token');
     return config;
 });
+
+// respone拦截器
+axios.interceptors.response.use(
+    (response) => {
+        /**
+         * code:200,接口正常返回;
+         */
+        const res = response.data;
+        if (res.code != 200) {
+            Message({
+                message: res.message,
+                type: 'error',
+                duration: 5 * 1000,
+            });
+        } else {
+            // res.code === 200,正常返回数据
+            return response.data;
+        }
+    },
+    (error) => {
+        Message({
+            message: error.message,
+            type: 'error',
+            duration: 5 * 1000,
+        });
+    }
+);
 
 new Vue({
     el: '#app',
