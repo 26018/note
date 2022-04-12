@@ -27,7 +27,7 @@ public class NoteController {
 
     @GetMapping("/notes")
     public Result<String> notes(@NotBlank(message = "token不能为空")
-                                @RequestHeader String token) {
+                                @RequestHeader String token) throws Exception {
         User user = userService.getByToken(token);
         List<Note> notes = noteService.allNotes(String.valueOf(user.getId()));
         return new Result<>(Response.SUCCESS, JSON.toJSONString(notes));
@@ -36,7 +36,7 @@ public class NoteController {
     @PostMapping("/notes")
     public Result<String> insert(
             @NotBlank(message = "token不能为空") @RequestHeader String token,
-            @NotBlank(message = "note为不能空") @RequestParam String noteString) {
+            @NotBlank(message = "note为不能空") @RequestParam String noteString) throws Exception {
         User user = userService.getByToken(token);
         noteService.insert(new Note(noteString, user.getId()));
         return new Result<>(Response.SUCCESS);

@@ -3,6 +3,7 @@ package com.moon.note.entity;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.Date;
 
 /**

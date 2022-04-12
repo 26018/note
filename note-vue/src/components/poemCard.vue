@@ -1,17 +1,18 @@
 <template>
     <div class="some">
         <h3>
-            <li>{{ poem.title }}</li>
+            <li>{{ note.title }}</li>
         </h3>
-        <blockquote class="poem" v-html="utils.noteParse(poem.content, poem.time)" />
+        <blockquote class="poem" v-html="parse(note.content, note.time)" />
     </div>
 </template>
 
 <script>
+import { noteParse } from '../common/note';
 export default {
-    name: 'poem',
+    name: 'note',
     props: {
-        poem: {
+        note: {
             title: String,
             content: String,
             time: String,
@@ -20,7 +21,11 @@ export default {
     data() {
         return {};
     },
-    methods: {},
+    methods: {
+        parse(content, time) {
+            return noteParse(content, time);
+        },
+    },
 };
 </script>
 

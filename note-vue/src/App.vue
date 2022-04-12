@@ -13,9 +13,7 @@ export default {
     data() {
         return {};
     },
-    created() {
-        // console.log(this.$refs);
-    },
+    created() {},
 };
 </script>
 
@@ -23,11 +21,17 @@ export default {
 .routerView {
     width: 100%;
     height: 90%;
-    /* border: 1px saddlebrown solid; */
     overflow: scroll;
 }
 
 .routerView::-webkit-scrollbar {
     width: 0;
+}
+</style>
+
+<style>
+.el-message,
+.el-message-box {
+    max-width: 90% !important;
 }
 </style>

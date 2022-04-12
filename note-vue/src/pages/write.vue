@@ -2,10 +2,10 @@
     <div id="write">
         <div class="writeBoxOBJ">
             <div class="poembox">
-                <p>{{ poems }}</p>
+                <p>{{ poem }}</p>
             </div>
-            <textarea :placeholder="sentence" class="writeBox" @keyup="utils.updatePoemData(poemString)" v-model="poemString" @keydown.s="CTRLAndS($event)">
-      {{ poemString }}
+            <textarea :placeholder="sentence" class="writeBox" @keyup="update" v-model="note" @keydown.s="CTRLAndS($event)">
+      {{ note }}
     </textarea
             >
         </div>
@@ -13,12 +13,15 @@
 </template>
 
 <script>
+import { getEditingNote, noteSave, removeEditingNote, updateByKeyDown } from '../common/note';
+import { getIndex, getPoems, poems, setIndex, setPoems } from '../common/poem';
+import { MessageBox, Message } from 'element-ui';
 export default {
     name: 'write',
     data() {
         return {
-            poemString: '',
-            poems: '火树银花合，星桥铁锁开。',
+            note: '',
+            poem: '火树银花合，星桥铁锁开。',
             poemBox: {
                 currentIdx: 0,
                 data: [],
@@ -40,12 +43,44 @@ export default {
         CTRLAndS(e) {
             if (e.ctrlKey == true) {
                 // CTRL + S 的操作
-                let that = this;
-                utils.noteSave(() => {
-                    localStorage.removeItem('unSavePoemString');
-                    that.poemString = '';
-                });
+                this.noteSaveConfirm();
             }
+        },
+        update() {
+            updateByKeyDown(this.note);
+        },
+
+        noteSaveConfirm() {
+            if (this.note == null || this.note.trim().length == 0) {
+                return;
+            }
+            MessageBox.confirm('保存note, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+            })
+                .then(async () => {
+                    await noteSave(this.note).then((res) => {
+                        if (res.code == 200) {
+                            Message({
+                                message: '保存成功',
+                                type: 'success',
+                                showClose: true,
+                                duration: 2000,
+                            });
+                            this.note = '';
+                            removeEditingNote();
+                        }
+                    });
+                })
+                .catch(() => {
+                    Message({
+                        type: 'info',
+                        message: '已取消删除',
+                        showClose: true,
+                        duration: 2000,
+                    });
+                });
         },
     },
     mounted() {
@@ -56,23 +91,23 @@ export default {
         });
 
         // 获取未保存的输入
-        this.poemString = localStorage.getItem('unSavePoemString');
-        var pb = JSON.parse(localStorage.getItem('poemBox'));
+        this.note = getEditingNote();
+        var pb = JSON.parse(getPoems());
         var currentIdx = localStorage.getItem('currentIdx');
         // 本地无存储或存储过期则向服务器请求（过期时间为一天）
         if (pb == null || Date.parse(new Date()) - pb['expiredTime'] > pb['createTime']) {
-            utils.poems((res) => {
+            poems(getIndex()).then((res) => {
                 pb = new Object();
                 currentIdx = 0;
-                let obj = JSON.parse(res.data.data);
+                let obj = JSON.parse(res.data);
                 let index = obj[0]['index'];
                 console.log('return Index:' + index);
                 pb['createTime'] = Date.parse(new Date());
                 pb['data'] = obj[1];
                 pb['expiredTime'] = 86400000;
-                localStorage.setItem('index', index);
+                setIndex(index);
                 localStorage.setItem('currentIdx', currentIdx);
-                localStorage.setItem('poemBox', JSON.stringify(pb));
+                setPoems(JSON.stringify(pb));
             });
         }
 
@@ -80,19 +115,20 @@ export default {
         if (currentIdx + 1 >= len) {
             currentIdx = currentIdx % len;
         }
-        this.poems = pb['data'][currentIdx]['sentence'];
+        this.poem = pb['data'][currentIdx]['sentence'];
         setInterval(() => {
             if (currentIdx >= len) {
                 currentIdx = 0;
             }
-            this.poems = pb['data'][currentIdx++]['sentence'];
+            this.poem = pb['data'][currentIdx++]['sentence'];
             localStorage.setItem('currentIdx', currentIdx);
-        }, 8000);
+        }, 7000);
     },
 };
 </script>
 
 <style>
+.el-message,
 .el-message-box {
     max-width: 90% !important;
 }

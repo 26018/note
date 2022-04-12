@@ -1,30 +1,37 @@
 <template>
     <div id="setting">
-        <div class="poemKfram" v-if="poems != undefined || poems != null" v-for="poem in poems">
-            <PoemEditCard :poem="poem" />
+        <div class="poemKfram" v-if="notes != null" v-for="note in notes">
+            <PoemEditCard :note="note" />
         </div>
     </div>
 </template>
 
 <script>
+import { notes } from '../common/note';
 import PoemEditCard from '../components/poemEditCard.vue';
 export default {
     name: 'setting',
     data() {
         return {
-            poems: [],
+            notes: [],
         };
     },
     components: { PoemEditCard },
 
     created() {
-        let that = this;
-        this.utils.notes(function(data) {
-            that.poems = data;
+        notes().then((res) => {
+            this.notes = JSON.parse(res.data);
         });
     },
 };
 </script>
+
+<style>
+.el-message,
+.el-message-box {
+    max-width: 90% !important;
+}
+</style>
 <style lang="css" scoped>
 #setting {
     width: 100%;

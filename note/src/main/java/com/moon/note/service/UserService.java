@@ -6,6 +6,7 @@ import com.moon.note.entity.*;
 import com.moon.note.mapper.UserDao;
 import com.moon.note.utils.PasswordCheckUtil;
 import com.moon.note.utils.RandomSaltUtil;
+import com.moon.note.utils.TokenUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,8 +37,8 @@ public class UserService {
             throw new Exception(Response.ERROR_PASSWORD.getMessage());
         }
         // 清除密码，避免token中出现用户密码
-        user.setPassword("");
-        UserToken userToken = new UserToken(user, System.currentTimeMillis());
+        u.setPassword("");
+        UserToken userToken = new UserToken(u, System.currentTimeMillis());
         String token = DesUtil.encrypt(JSON.toJSONString(userToken));
         userTokensMap.put(token, userToken);
         return token;
@@ -63,7 +64,14 @@ public class UserService {
         return userDao.selectUserByUsername(username) != null;
     }
 
-    public User getByToken(String token){
+    public User getByToken(String token) throws Exception {
+        if (!userTokensMap.containsKey(token)) {
+            UserToken userToken = TokenUtil.getUserToken(token);
+            if (userToken == null) {
+                throw new Exception("token解析错误");
+            }
+            return userToken.getUser();
+        }
         return userTokensMap.get(token).getUser();
     }
 

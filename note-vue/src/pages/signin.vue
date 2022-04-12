@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { login } from '../common/user';
+import { login, setToken } from '../common/user';
 import { navClick } from '../common/util';
 export default {
     name: 'signin',
@@ -30,8 +30,8 @@ export default {
     methods: {
         userLogin() {
             login(this.username, this.password).then((res) => {
-                localStorage.setItem('token', res.data);
-                navClick('/');
+                setToken(res.data);
+                navClick('/write');
             });
         },
         navClick(path) {
@@ -41,6 +41,12 @@ export default {
 };
 </script>
 
+<style>
+.el-message,
+.el-message-box {
+    max-width: 90% !important;
+}
+</style>
 <style scoped>
 #title {
     line-height: 40px;

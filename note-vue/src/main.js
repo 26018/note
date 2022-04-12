@@ -4,14 +4,12 @@ import router from './router';
 import axios from 'axios';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import write from './pages/write.vue';
 import qs from 'qs';
 import { Message } from 'element-ui';
 
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
-Vue.prototype.$write = write;
 axios.defaults.withCredentials = true;
 
 // 全局监听是否登录

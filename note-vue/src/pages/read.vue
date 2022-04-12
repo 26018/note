@@ -1,27 +1,29 @@
 <template>
     <div id="read">
-        <div class="poemDiv" v-if="poems != null" v-for="poem in poems">
-            <PoemCard :poem="poem" />
+        <div class="poemDiv" v-if="notes != null" v-for="note in notes">
+            <PoemCard :note="note" />
         </div>
     </div>
 </template>
 
 <script>
+import { notes } from '../common/note';
 import PoemCard from '../components/poemCard.vue';
 
 export default {
     name: 'read',
     data() {
         return {
-            poems: [],
+            notes: [],
         };
     },
     components: { PoemCard },
 
     created() {
-        var that = this;
-        this.utils.notes(function(data) {
-            that.poems = data;
+        notes().then((res) => {
+            let notesBox = JSON.parse(res.data);
+            this.notes = notesBox;
+            console.log(this.notes);
         });
     },
 };
@@ -35,5 +37,12 @@ export default {
 .poemDiv {
     width: 90%;
     margin: 0 auto;
+}
+</style>
+
+<style>
+.el-message,
+.el-message-box {
+    max-width: 90% !important;
 }
 </style>

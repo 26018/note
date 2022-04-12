@@ -2,27 +2,28 @@
     <div id="poemEditCard" v-show="showTable">
         <div>
             <h3>
-                <li>{{ poem.title }}</li>
+                <li>{{ note.title }}</li>
             </h3>
 
-            <button class="clickButton" @click="deletePoemData(poem.id)">
+            <button class="clickButton" @click="deletePoemData(note.id)">
                 delete
             </button>
 
-            <button class="clickButton" @click="editPoemData(poem)">
+            <button class="clickButton" @click="editPoemData(note)">
                 edit
             </button>
         </div>
 
-        <blockquote class="poem" v-html="utils.noteParse(poem.content, poem.time)" />
+        <blockquote class="poem" v-html="parse(note.content, note.time)" />
     </div>
 </template>
 
 <script>
+import { noteParse } from '../common/note';
 export default {
     name: 'PoemEditCard',
     props: {
-        poem: {
+        note: {
             title: String,
             content: String,
             time: String,
@@ -30,12 +31,16 @@ export default {
     },
     data() {
         return {
-            poems: [],
+            notes: [],
             showTable: true,
         };
     },
 
     methods: {
+        parse(content, time) {
+            return noteParse(content, time);
+        },
+
         deletePoemOPT(poemID) {
             // 请求后台删除poem
             this.$axios({
@@ -44,7 +49,7 @@ export default {
             })
                 .then((result) => {
                     console.log(result.data);
-                    if (result.data.code === 200) {
+                    if (result.code === 200) {
                         // 保存成功通知
                         this.$message({
                             showClose: true,

@@ -48,6 +48,12 @@ export default {
 };
 </script>
 
+<style>
+.el-message,
+.el-message-box {
+    max-width: 90% !important;
+}
+</style>
 <style scoped>
 #title {
     line-height: 40px;
