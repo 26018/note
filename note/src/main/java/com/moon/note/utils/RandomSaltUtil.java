@@ -12,7 +12,6 @@ public class RandomSaltUtil {
     private static class RandomSaltAndExpireTime {
         String randomSalt;
         Long lastTime;
-
         RandomSaltAndExpireTime(String randomSalt, Long lastTime) {
             this.randomSalt = randomSalt;
             this.lastTime = lastTime;

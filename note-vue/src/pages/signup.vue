@@ -23,6 +23,7 @@
     </div>
 </template>
 <script>
+import { Message } from 'element-ui';
 import { randomSalt, register } from '../common/user';
 import { navClick } from '../common/util';
 export default {
@@ -36,10 +37,24 @@ export default {
     },
     methods: {
         register() {
-            register(this.username, this.password, this.randomsalt);
+            register(this.username, this.password, this.randomsalt).then((res) => {
+                Message({
+                    message: res.message,
+                    type: 'success',
+                    showClose: true,
+                    duration: 5 * 1000,
+                });
+            });
         },
         randomSalt() {
-            randomSalt(this.username, this.password, this.randomsalt);
+            randomSalt(this.username, this.password, this.randomsalt).then((res) => {
+                Message({
+                    message: res.message,
+                    type: 'success',
+                    showClose: true,
+                    duration: 5 * 1000,
+                });
+            });
         },
         navClick(path) {
             navClick(path);

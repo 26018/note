@@ -26,8 +26,6 @@ import javax.validation.constraints.NotBlank;
 @RequestMapping("/users")
 public class UserController {
 
-//    @Resource
-//    RandomSaltUtil randomSaltUtil;
     @Resource
     UserService userService;
     @Resource
@@ -45,7 +43,7 @@ public class UserController {
     @PostMapping("/register")
     public Result<String> register(@Validated User user, @NotBlank(message = "验证码不能为空") @RequestParam String randomsalt) throws Exception {
         userService.register(user, randomsalt);
-        return new Result<>(Response.SUCCESS);
+        return new Result<>(200,"注册成功");
     }
 
     @PostMapping("/login")

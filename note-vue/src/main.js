@@ -53,6 +53,7 @@ axios.interceptors.response.use(
             Message({
                 message: res.message,
                 type: 'error',
+                showClose: true,
                 duration: 5 * 1000,
             });
         } else {
@@ -64,6 +65,7 @@ axios.interceptors.response.use(
         Message({
             message: error.message,
             type: 'error',
+            showClose: true,
             duration: 5 * 1000,
         });
     }

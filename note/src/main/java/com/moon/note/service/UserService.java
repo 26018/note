@@ -1,16 +1,17 @@
 package com.moon.note.service;
 
 import com.alibaba.fastjson.JSON;
-import com.moon.note.utils.DesUtil;
-import com.moon.note.entity.*;
+import com.moon.note.entity.Response;
+import com.moon.note.entity.User;
+import com.moon.note.entity.UserToken;
 import com.moon.note.mapper.UserDao;
+import com.moon.note.utils.DesUtil;
 import com.moon.note.utils.PasswordCheckUtil;
-import com.moon.note.utils.RandomSaltUtil;
+import com.moon.note.utils.RedisUtil;
 import com.moon.note.utils.TokenUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 
 /**
  * @author JinHui
@@ -24,9 +25,7 @@ public class UserService {
     UserDao userDao;
 
     @Resource
-    HashMap<String, UserToken> userTokensMap;
-    @Resource
-    HashMap<String, String> verificationCodeMap;
+    RedisUtil redisUtil;
 
     public String login(User user) throws Exception {
         User u = userDao.selectUserByUsername(user.getUsername());
@@ -40,7 +39,7 @@ public class UserService {
         u.setPassword("");
         UserToken userToken = new UserToken(u, System.currentTimeMillis());
         String token = DesUtil.encrypt(JSON.toJSONString(userToken));
-        userTokensMap.put(token, userToken);
+        redisUtil.set(token, JSON.toJSON(userToken));
         return token;
     }
 
@@ -48,9 +47,8 @@ public class UserService {
         if (exist(user.getUsername())) {
             throw new Exception(Response.USER_ALREADY_EXISTS.getMessage());
         }
-        // 设置工具类的集合 再使用工具类
-        RandomSaltUtil.randoms = verificationCodeMap;
-        if (!RandomSaltUtil.valid(user.getUsername(), randomSalt)) {
+        // 校验验证码
+        if (!randomSalt.equals(redisUtil.get(user.getUsername()))) {
             throw new Exception(Response.RANDOMSALT_IS_ERROR.getMessage());
         }
         // 密码强度检验
@@ -65,15 +63,13 @@ public class UserService {
     }
 
     public User getByToken(String token) throws Exception {
-        if (!userTokensMap.containsKey(token)) {
+        if (!redisUtil.hasKey(token)) {
             UserToken userToken = TokenUtil.getUserToken(token);
             if (userToken == null) {
                 throw new Exception("token解析错误");
             }
             return userToken.getUser();
         }
-        return userTokensMap.get(token).getUser();
+        return JSON.parseObject(redisUtil.get(token).toString(), UserToken.class).getUser();
     }
-
-
 }

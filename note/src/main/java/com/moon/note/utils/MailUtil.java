@@ -72,11 +72,4 @@ public class MailUtil {
         }
         return true;
     }
-
-//    public boolean mailValid(String mail) {
-//        if (mail != null && !mail.isEmpty()) {
-//            return Pattern.matches("^(\\w+([-.][A-Za-z0-9]+)*){3,18}@\\w+([-.][A-Za-z0-9]+)*\\.\\w+([-.][A-Za-z0-9]+)*$", mail);
-//        }
-//        return false;
-//    }
 }

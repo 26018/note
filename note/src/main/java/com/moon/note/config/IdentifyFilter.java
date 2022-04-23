@@ -18,10 +18,7 @@ import java.util.HashMap;
 @Configuration
 public class IdentifyFilter implements Filter {
 
-    private static String[] PATHS = {"/users/login", "/users/register", "/mail", "swagger"};
-
-    @Resource
-    HashMap<String, UserToken> userTokensMap;
+    private static String[] PATHS = {"/users/login", "/users/register", "/mail", "swagger","/errorpage","/redis"};
 
     @Resource
     ExpireTimeConfig expireTimeConfig;
@@ -43,10 +40,12 @@ public class IdentifyFilter implements Filter {
             }
         }
 
+        // 非controller层的错误不能被全局捕获，所以将其转到controller层
         if (!TokenUtil.valid(request, userTokensMap, expireTimeConfig.getToken())) {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/errorpage/token-invlid-error");
             requestDispatcher.forward(request, servletResponse);
         }
+
         // token时间延期后重新放入列表
         TokenUtil.resetTokenExpireTime(TokenUtil.getToken(request), userTokensMap);
         filterChain.doFilter(servletRequest, servletResponse);
