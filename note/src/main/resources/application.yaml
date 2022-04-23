@@ -10,7 +10,8 @@ spring:
   redis:
     database: 5
     # 配置redis的主机地址，需要修改成自己的
-    host: 127.0.0.1
+    host: 82.157.231.20
+    password: redis257248
     port: 6379
 #    password: 123456
     timeout: 5000
@@ -25,10 +26,9 @@ spring:
         # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
         max-wait: 2000
 
-
 expire:
-  token: 604800000 # 一周
-  randomSalt: 3600000 # 一个小时
+  token: 259200 # 三天 （秒）
+  randomSalt: 3600 # 一个小时 （秒）
 
 poemCount: 50
 

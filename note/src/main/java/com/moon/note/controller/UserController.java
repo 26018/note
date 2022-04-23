@@ -32,7 +32,8 @@ public class UserController {
     MailService mailService;
 
     @PostMapping("/register/randomsalt")
-    public Result<String> sendRandomCode(@Email(message = "邮箱格式错误") @NotBlank(message = "邮箱不能为空") String username, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public Result<String> sendRandomCode(@Email(message = "邮箱格式错误") @NotBlank(message = "邮箱不能为空")
+                                         String username, HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (userService.exist(username)) {
             return new Result<>(Response.USER_ALREADY_EXISTS);
         }
@@ -43,7 +44,7 @@ public class UserController {
     @PostMapping("/register")
     public Result<String> register(@Validated User user, @NotBlank(message = "验证码不能为空") @RequestParam String randomsalt) throws Exception {
         userService.register(user, randomsalt);
-        return new Result<>(200,"注册成功");
+        return new Result<>(200, "注册成功");
     }
 
     @PostMapping("/login")

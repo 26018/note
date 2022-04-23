@@ -18,9 +18,10 @@ public class ExpireTimeConfig {
      * 用户token过期时间
      */
     long token;
+
     /**
      * 验证码过期时间
      */
-    long randomSalt;
+    long verification;
 
 }

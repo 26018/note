@@ -5,10 +5,7 @@ import com.moon.note.entity.Response;
 import com.moon.note.entity.User;
 import com.moon.note.entity.UserToken;
 import com.moon.note.mapper.UserDao;
-import com.moon.note.utils.DesUtil;
-import com.moon.note.utils.PasswordCheckUtil;
-import com.moon.note.utils.RedisUtil;
-import com.moon.note.utils.TokenUtil;
+import com.moon.note.utils.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,7 +22,10 @@ public class UserService {
     UserDao userDao;
 
     @Resource
-    RedisUtil redisUtil;
+    VerificationUtil verificationUtil;
+
+    @Resource
+    TokenUtil tokenUtil;
 
     public String login(User user) throws Exception {
         User u = userDao.selectUserByUsername(user.getUsername());
@@ -39,7 +39,7 @@ public class UserService {
         u.setPassword("");
         UserToken userToken = new UserToken(u, System.currentTimeMillis());
         String token = DesUtil.encrypt(JSON.toJSONString(userToken));
-        redisUtil.set(token, JSON.toJSON(userToken));
+        tokenUtil.set(token, JSON.toJSONString(userToken));
         return token;
     }
 
@@ -48,7 +48,7 @@ public class UserService {
             throw new Exception(Response.USER_ALREADY_EXISTS.getMessage());
         }
         // 校验验证码
-        if (!randomSalt.equals(redisUtil.get(user.getUsername()))) {
+        if (!randomSalt.equals(verificationUtil.get(user.getUsername()))) {
             throw new Exception(Response.RANDOMSALT_IS_ERROR.getMessage());
         }
         // 密码强度检验
@@ -63,13 +63,13 @@ public class UserService {
     }
 
     public User getByToken(String token) throws Exception {
-        if (!redisUtil.hasKey(token)) {
-            UserToken userToken = TokenUtil.getUserToken(token);
+        if (!tokenUtil.contains(token)) {
+            UserToken userToken = tokenUtil.getByType(token, UserToken.class);
             if (userToken == null) {
                 throw new Exception("token解析错误");
             }
             return userToken.getUser();
         }
-        return JSON.parseObject(redisUtil.get(token).toString(), UserToken.class).getUser();
+        return tokenUtil.getByType(token,UserToken.class).getUser();
     }
 }

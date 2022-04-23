@@ -1,14 +1,15 @@
 package com.moon.note.config;
 
+import com.alibaba.fastjson.JSON;
 import com.moon.note.entity.UserToken;
-import com.moon.note.utils.TokenUtil;
+import com.moon.note.utils.DesUtil;
+import com.moon.note.utils.RedisUtil;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * @author JinHui
@@ -18,10 +19,14 @@ import java.util.HashMap;
 @Configuration
 public class IdentifyFilter implements Filter {
 
-    private static String[] PATHS = {"/users/login", "/users/register", "/mail", "swagger","/errorpage","/redis"};
+    private static String[] PATHS = {"/users/login", "/users/register", "/mail", "swagger", "/errorpage", "/redis"};
 
     @Resource
     ExpireTimeConfig expireTimeConfig;
+
+    @Resource
+    RedisUtil redisUtil;
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -40,14 +45,21 @@ public class IdentifyFilter implements Filter {
             }
         }
 
-        // 非controller层的错误不能被全局捕获，所以将其转到controller层
-        if (!TokenUtil.valid(request, userTokensMap, expireTimeConfig.getToken())) {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/errorpage/token-invlid-error");
-            requestDispatcher.forward(request, servletResponse);
+        String token = request.getHeader("token");
+        UserToken userToken = null;
+        if (!redisUtil.hasKey(token)) {
+            try {
+                userToken = JSON.parseObject(DesUtil.decrypt(token), UserToken.class);
+                boolean valid = userToken != null && System.currentTimeMillis() - userToken.getExpiredTime() <= expireTimeConfig.getToken();
+                if (!valid) {
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/errorpage/token-invlid-error");
+                    requestDispatcher.forward(request, servletResponse);
+                }
+            } catch (Exception e) {
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/errorpage/token-invlid-error");
+                requestDispatcher.forward(request, servletResponse);
+            }
         }
-
-        // token时间延期后重新放入列表
-        TokenUtil.resetTokenExpireTime(TokenUtil.getToken(request), userTokensMap);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
