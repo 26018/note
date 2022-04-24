@@ -1,16 +1,13 @@
 package com.moon.note.utils;
 
-/**
- * @author MoonLight
- */
-
 import com.alibaba.fastjson.JSON;
 import com.moon.note.config.ExpireTimeConfig;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.Resource;
 
+
 /**
+ * @author MoonLight
  * Token工具集合
  */
 
@@ -21,7 +18,6 @@ public class TokenUtil {
     RedisUtil redisUtil;
     @Resource
     ExpireTimeConfig config;
-
 
     public void set(String token, String userToken) {
         redisUtil.set(token, userToken, config.getToken());

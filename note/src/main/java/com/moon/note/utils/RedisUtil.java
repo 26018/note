@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public final class RedisUtil {
 
     @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+    RedisTemplate redisTemplate;
 
     // =============================common============================
 
@@ -57,30 +57,13 @@ public final class RedisUtil {
      */
     public boolean hasKey(String key) {
         try {
-            return redisTemplate.hasKey(key);
+            return Boolean.TRUE.equals(redisTemplate.hasKey(key));
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
 
-
-//    /**
-//     * 删除缓存
-//     *
-//     * @param key 可以传一个值 或多个
-//     */
-//    @SuppressWarnings("unchecked")
-//    public void del(String... key) {
-//        if (key != null && key.length > 0) {
-//            if (key.length == 1) {
-//                redisTemplate.delete(key[0]);
-//            } else {
-//                redisTemplate.delete(CollectionUtils.arrayToList(key));
-//            }
-//        }
-//    }
-//
     // ============================String=============================
 
     /**

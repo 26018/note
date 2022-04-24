@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "expire", ignoreUnknownFields = true)
+@ConfigurationProperties(prefix = "expire")
 public class ExpireTimeConfig {
 
     /**

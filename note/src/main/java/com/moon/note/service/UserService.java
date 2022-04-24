@@ -5,7 +5,10 @@ import com.moon.note.entity.Response;
 import com.moon.note.entity.User;
 import com.moon.note.entity.UserToken;
 import com.moon.note.mapper.UserDao;
-import com.moon.note.utils.*;
+import com.moon.note.utils.DesUtil;
+import com.moon.note.utils.PasswordCheckUtil;
+import com.moon.note.utils.TokenUtil;
+import com.moon.note.utils.VerificationUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,10 +23,8 @@ public class UserService {
 
     @Resource
     UserDao userDao;
-
     @Resource
     VerificationUtil verificationUtil;
-
     @Resource
     TokenUtil tokenUtil;
 
@@ -37,9 +38,8 @@ public class UserService {
         }
         // 清除密码，避免token中出现用户密码
         u.setPassword("");
-        UserToken userToken = new UserToken(u, System.currentTimeMillis());
-        String token = DesUtil.encrypt(JSON.toJSONString(userToken));
-        tokenUtil.set(token, JSON.toJSONString(userToken));
+        String token = DesUtil.encrypt(JSON.toJSONString(u));
+        tokenUtil.set(token, JSON.toJSONString(u));
         return token;
     }
 

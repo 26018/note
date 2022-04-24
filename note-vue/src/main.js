@@ -31,6 +31,7 @@ Router.prototype.push = function push(location) {
 };
 
 import http from 'http'; //此处问http文件的路径
+import { removeToken } from './common/user';
 Vue.prototype.$http = http;
 // 全局拦截 加token
 axios.interceptors.request.use((config) => {
@@ -50,6 +51,9 @@ axios.interceptors.response.use(
          */
         const res = response.data;
         if (res.code != 200) {
+            if (res.code == 600) {
+                removeToken();
+            }
             Message({
                 message: res.message,
                 type: 'error',
