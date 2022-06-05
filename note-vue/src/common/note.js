@@ -7,6 +7,7 @@ export function noteParse(noteContent, time) {
         let arr = noteContent.split('\n');
         for (let index = 0; index < arr.length; index++) changedSentence += '<p>' + arr[index] + '</p>';
     }
+
     return changedSentence + '<p><i>' + dataFormate(time) + '</i></p>';
 }
 

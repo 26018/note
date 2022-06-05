@@ -21,7 +21,7 @@ export default {
 
     created() {
         notes().then((res) => {
-            this.notes = res.data;
+            this.notes = JSON.parse(res.data);
         });
     },
 };

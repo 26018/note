@@ -1,5 +1,6 @@
 package com.moon.note.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.moon.note.entity.Note;
 import com.moon.note.entity.Result;
 import com.moon.note.entity.User;
@@ -27,7 +28,7 @@ public class NoteController {
     public Result<String> notes(@NotBlank(message = "token不能为空") @RequestHeader String token) throws Exception {
         User user = userService.getByToken(token);
         List<Note> notes = noteService.allNotes(String.valueOf(user.getId()));
-        return Result.success(notes);
+        return Result.success(JSON.toJSONString(notes));
     }
 
     @PostMapping("/notes")
