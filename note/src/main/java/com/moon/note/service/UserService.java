@@ -38,8 +38,9 @@ public class UserService {
         }
         // 清除密码，避免token中出现用户密码
         u.setPassword("");
-        String token = DesUtil.encrypt(JSON.toJSONString(u));
-        tokenUtil.set(token, JSON.toJSONString(u));
+        UserToken userToken = new UserToken(u, System.currentTimeMillis() + tokenUtil.expiredTime);
+        String token = DesUtil.encrypt(JSON.toJSONString(userToken));
+        tokenUtil.set(token, JSON.toJSONString(userToken));
         return token;
     }
 

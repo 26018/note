@@ -11,9 +11,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Response {
-    /**
-     *
-     */
     FAIL(520, "请求失败"),
     PARAMETER_IS_NULL(530, "参数不能为空"),
     USER_NOT_REGISTER(540, "用户未注册"),
@@ -26,6 +23,7 @@ public enum Response {
 
     TOKEN_IS_INVALID(600,"无效的Token"),
     TOKEN_IS_EXPIRED(610,"Token已过期"),
+
     RANDOMSALT_IS_EXPIRED(620,"验证码已过期"),
     RANDOMSALT_IS_ERROR(630,"验证码错误"),
     REPEAT_REQUEST(640,"重复的请求"),

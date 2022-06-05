@@ -1,68 +1,109 @@
 package com.moon.note.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import javax.annotation.PostConstruct;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
+import javax.annotation.Resource;
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 
 /**
  * @author MoonLight
  */
+
 @Service
 public class MailService {
 
-    private final static String SERVER_MAIL_USER_NAME = "2033471349@qq.com";
-    private final static String SERVER_MAIL_USER_PASSWORD = "tbxjsexmhrqidjae";
-    private final static String HOST = "smtp.qq.com";
-    private final static Session SESSION;
-    private final static MimeMessage MIME_MESSAGE;
-    private final static Properties PROPERTIES = new Properties();
-    private Transport transport;
+    @Value("${spring.mail.username}")
+    private String from;
+    @Resource
+    private JavaMailSender mailSender;
+    @Resource
+    private TemplateEngine templateEngine;
 
-    static {
-        PROPERTIES.setProperty("mail.host", HOST);
-        PROPERTIES.setProperty("mail.transport.protocol", "smtp");
-        PROPERTIES.setProperty("mail.smtp.auth", "true");
-        SESSION = Session.getDefaultInstance(PROPERTIES, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(SERVER_MAIL_USER_NAME, SERVER_MAIL_USER_PASSWORD);
-            }
-        });
-        MIME_MESSAGE = new MimeMessage(SESSION);
-        try {
-            MIME_MESSAGE.setFrom(new InternetAddress(SERVER_MAIL_USER_NAME));
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+    @Resource
+    private Context context;
+
+    @Resource
+    private MimeMessage mimeMessage;
+    @Resource
+    private SimpleMailMessage simpleMailMessage;
+
+    @Resource
+    private MimeMessageHelper mimeMessageHelper;
+
+    @Bean
+    private TemplateEngine getTemplateEngine() {
+        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
+        resolver.setPrefix("/templates/");
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode("HTML5");
+        TemplateEngine templateEngine = new TemplateEngine();
+        templateEngine.setTemplateResolver(resolver);
+        return templateEngine;
     }
 
-    private Transport getTransport() throws MessagingException {
-        Transport transport = SESSION.getTransport();
-        transport.connect(HOST, SERVER_MAIL_USER_NAME, SERVER_MAIL_USER_PASSWORD);
-        return transport;
+    @Bean
+    private Context getContext() {
+        return new Context();
     }
 
-    private MimeMessage getMailObject(String userMail, String mailTitle, String content) throws MessagingException {
-        //邮件接收人
-        MIME_MESSAGE.setRecipient(Message.RecipientType.TO, new InternetAddress(userMail));
-        //邮件标题
-        MIME_MESSAGE.setSubject(mailTitle);
-        //邮件内容
-        MIME_MESSAGE.setContent(content, "text/html;charset=UTF-8");
-        return MIME_MESSAGE;
+    @Bean
+    private MimeMessage getMiMeMessage() {
+        return mailSender.createMimeMessage();
     }
 
-    @PostConstruct
-    void init() throws MessagingException {
-        transport = getTransport();
+    @Bean
+    private SimpleMailMessage getSimpleMailMessage() {
+        return new SimpleMailMessage();
     }
 
-    public void sendMail(String userMail, String mailTitle, String content) throws MessagingException {
-        MimeMessage mailObject = getMailObject(userMail, mailTitle, content);
-        transport.sendMessage(mailObject, mailObject.getAllRecipients());
+    @Bean
+    private MimeMessageHelper getMimeMessageHelper() throws MessagingException {
+        return new MimeMessageHelper(mimeMessage, true);
+    }
+
+
+    /**
+     * 发送简单邮件
+     *
+     * @param to
+     * @param subject
+     * @param content
+     */
+    public void sendSimpleMail(String to, String subject, String content) {
+        simpleMailMessage.setTo(to);
+        simpleMailMessage.setSubject(subject);
+        simpleMailMessage.setText(content);
+        simpleMailMessage.setFrom(from);
+        mailSender.send(simpleMailMessage);
+    }
+
+    /**
+     * 发送HTML邮件
+     *
+     * @param to
+     * @param subject
+     * @param content
+     * @throws MessagingException
+     */
+    public void sendHtmlMail(String to, String subject, String content) throws MessagingException {
+        mimeMessageHelper.setFrom(from);
+        mimeMessageHelper.setTo(to);
+        mimeMessageHelper.setSubject(subject);
+
+        context.clearVariables();
+        context.setVariable("username", to);
+        context.setVariable("id", content);
+
+        mimeMessageHelper.setText(templateEngine.process("mail", context), true);
+        mailSender.send(mimeMessage);
     }
 }

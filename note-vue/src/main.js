@@ -53,6 +53,7 @@ axios.interceptors.response.use(
         if (res.code != 200) {
             if (res.code == 600) {
                 removeToken();
+                router.push('/signin');
             }
             Message({
                 message: res.message,

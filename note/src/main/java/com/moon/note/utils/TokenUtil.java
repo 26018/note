@@ -1,8 +1,11 @@
 package com.moon.note.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.moon.note.config.ExpireTimeConfig;
+import com.moon.note.entity.UserToken;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.Resource;
 
 
@@ -12,15 +15,17 @@ import javax.annotation.Resource;
  */
 
 @Component
+@Slf4j
 public class TokenUtil {
 
     @Resource
     RedisUtil redisUtil;
-    @Resource
-    ExpireTimeConfig config;
+
+    @Value("${expire.token}")
+    public int expiredTime;
 
     public void set(String token, String userToken) {
-        redisUtil.set(token, userToken, config.getToken());
+        redisUtil.set(token, userToken, expiredTime);
     }
 
     public Object get(String token) {
@@ -32,7 +37,23 @@ public class TokenUtil {
     }
 
     public <T> T getByType(String token, Class<T> tClass) {
-        return JSON.parseObject((String) redisUtil.get(token), tClass);
+        return JSON.parseObject((String) get(token), tClass);
     }
 
+    public boolean valid(String token) {
+        UserToken userToken;
+        if (token == null) {
+            return false;
+        }
+        if (!contains(token)) {
+            try {
+                userToken = JSON.parseObject(DesUtil.decrypt(token), UserToken.class);
+                return (userToken != null) && (System.currentTimeMillis() - userToken.getExpiredTime() <= expiredTime);
+            } catch (Exception e) {
+                log.error("token解析异常:" + token);
+                return false;
+            }
+        }
+        return true;
+    }
 }

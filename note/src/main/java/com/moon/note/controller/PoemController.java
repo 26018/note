@@ -2,7 +2,6 @@ package com.moon.note.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.moon.note.entity.Response;
 import com.moon.note.entity.Result;
 import com.moon.note.mapper.PoemDao;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +28,7 @@ public class PoemController {
     @Value("${poemCount}")
     private int count;
 
-    JSONArray json = new JSONArray();
+    private final JSONArray json = new JSONArray();
 
     @PostMapping("/poems")
     public Result<String> poems(@NotNull(message = "index为空") @RequestParam String index) {
@@ -42,7 +41,7 @@ public class PoemController {
         json.clear();
         json.add(JSON.parse("{index:" + (idx + 1) + "}"));
         json.add(poems);
-        return new Result<>(Response.SUCCESS, json.toJSONString());
+        return Result.success(json.toJSONString());
     }
 
 }

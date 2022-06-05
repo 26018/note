@@ -32,4 +32,11 @@ class Result<T> {
         this.code = code;
         this.message = message;
     }
+
+    public static Result<String> success(){
+        return new Result(Response.SUCCESS);
+    }
+    public static Result<String> success(Object data){
+        return new Result(Response.SUCCESS, data);
+    }
 }

@@ -21,9 +21,7 @@ export default {
 
     created() {
         notes().then((res) => {
-            let notesBox = JSON.parse(res.data);
-            this.notes = notesBox;
-            console.log(this.notes);
+            this.notes = res.data;
         });
     },
 };

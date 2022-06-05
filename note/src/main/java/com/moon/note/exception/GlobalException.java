@@ -2,6 +2,7 @@ package com.moon.note.exception;
 
 import com.moon.note.entity.Response;
 import com.moon.note.entity.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -14,17 +15,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 @ResponseBody
+@Slf4j
 public class GlobalException {
 
     @ExceptionHandler(NullPointerException.class)
     public Result<String> exceptionHandler(Exception e) {
-        e.printStackTrace();
+        log.error("发生空指针异常:" + e.getMessage());
         return new Result<>(Response.FAIL);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public Result<String> illegalArgumentExceptionHandler(Exception e) {
-        e.printStackTrace();
+        log.error("发生非法参数异常:" + e.getMessage());
         return new Result<>(Response.PARAMETER_IS_NULL);
     }
 
@@ -38,11 +40,13 @@ public class GlobalException {
                 stringBuilder.append(",");
             }
         }
+        log.error("绑定数据异常:" + result.getAllErrors());
         return new Result<>(Response.FAIL.getCode(), stringBuilder.toString());
     }
 
     @ExceptionHandler(Exception.class)
     public Result<String> exception(Exception e) {
+        log.error("未知异常:" + e.getMessage());
         return new Result<>(Response.FAIL.getCode(), e.getMessage());
     }
 

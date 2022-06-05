@@ -2,11 +2,8 @@ package com.moon.note.controller;
 
 import com.moon.note.entity.Response;
 import com.moon.note.entity.Result;
-import com.moon.note.mapper.PoemDao;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 /**
  * @author MoonLight
@@ -15,9 +12,6 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/errorpage")
 public class ErrorPageController {
-
-    @Resource
-    PoemDao poemDao;
 
     @RequestMapping("/token-invlid-error")
     public Result<String> error() {

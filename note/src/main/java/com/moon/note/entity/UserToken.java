@@ -14,6 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserToken {
+
     User user;
+
     long expiredTime;
+
 }

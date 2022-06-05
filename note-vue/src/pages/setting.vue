@@ -20,7 +20,7 @@ export default {
 
     created() {
         notes().then((res) => {
-            this.notes = JSON.parse(res.data);
+            this.notes = res.data;
         });
     },
 };

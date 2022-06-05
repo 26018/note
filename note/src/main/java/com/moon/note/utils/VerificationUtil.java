@@ -1,7 +1,7 @@
 package com.moon.note.utils;
 
 
-import com.moon.note.config.ExpireTimeConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -15,16 +15,16 @@ import javax.annotation.Resource;
 public class VerificationUtil {
 
     @Resource
-    RedisUtil redisUtil;
+    private RedisUtil redisUtil;
 
-    @Resource
-    ExpireTimeConfig config;
+    @Value("${expire.verification}")
+    public int expiredTime;
 
     public void set(String mail, String code) {
         if (exist(mail)) {
             return;
         }
-        redisUtil.set(mail, code, config.getVerification());
+        redisUtil.set(mail, code, expiredTime);
     }
 
     public Object get(String mail) {
