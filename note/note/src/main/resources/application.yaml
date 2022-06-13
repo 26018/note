@@ -1,0 +1,24 @@
+server:
+  port: 1026
+
+spring:
+  profiles:
+    active: datasource,redis,mail,thymeleaf
+  main:
+    banner-mode: off
+
+
+mybatis-plus:
+  global-config:
+    banner: off
+
+
+expire:
+  token: 259200 # 三天 （秒）
+  verification: 300 # 五分钟 （秒）
+
+
+paths:
+  nocheck: /users/login, /users/register, /mail, /swagger, /errorpage, /redis, /favicon.ico
+
+poemCount: 50

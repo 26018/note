@@ -1,9 +1,0 @@
-#thymelea模板配置
-spring:
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-    mode: HTML5
-    encoding: UTF-8
-    cache: false
-    enabled: true

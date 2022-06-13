@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f2b0b748-38ae-462e-a1a6-208fa5fefdcd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/note.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/NoteApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/config/GlobalCorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/config/IdentifyFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/config/RedisConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/config/SwaggerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/controller/ErrorPageController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/controller/NoteController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/controller/PoemController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/entity/Note.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/entity/Response.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/entity/Result.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/entity/UserToken.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/exception/GlobalException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/mapper/NoteDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/mapper/PoemDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/mapper/UserDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/service/MailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/service/NoteService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/DesUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/PasswordCheckConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/PasswordCheckUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/RedisUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/StringUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/TokenUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/VerificationUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-datasource.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-mail.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-redis.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-thymeleaf.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/moon/note/Main.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\software\apache-maven-jars" />
+        <option name="mavenHome" value="D:/software/apache-maven-3.8.1" />
+        <option name="useMavenConfig" value="true" />
+        <option name="userSettingsFile" value="D:\software\apache-maven-3.8.1\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2AVuU4uis1Xn3hgOYV5GVGGGpVN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/MoonLight/Desktop/Moon/Project/note/note",
+    "settings.editor.selected.configurable": "MavenSettings"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="NoteApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="note" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.moon.note.NoteApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f2b0b748-38ae-462e-a1a6-208fa5fefdcd" name="Changes" comment="" />
+      <created>1655107088575</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1655107088575</updated>
+      <workItem from="1655107089783" duration="52000" />
+      <workItem from="1655107169787" duration="150000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
