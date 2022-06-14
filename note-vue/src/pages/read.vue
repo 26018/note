@@ -1,6 +1,7 @@
 <template>
-    <div id="read">
-        <div class="poemDiv" v-if="notes != null" v-for="note in notes">
+    <div id="read" v-if="notes != null">
+        <div class="countDiv">「{{ notes.length }}」</div>
+        <div class="poemDiv" v-for="note in notes">
             <PoemCard :note="note" />
         </div>
     </div>
@@ -32,9 +33,14 @@ export default {
     width: 100%;
 }
 
-.poemDiv {
+.poemDiv,
+.countDiv {
     width: 90%;
     margin: 0 auto;
+}
+
+.countDiv {
+    color: gray;
 }
 </style>
 

@@ -14,7 +14,5 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class NoteApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(NoteApplication.class, args);
-        Object identifyFilter = run.getBean("identifyFilter");
-        System.out.println(identifyFilter.toString());
     }
 }

@@ -19,7 +19,6 @@ public class NoteService {
 
     @Resource
     NoteDao noteDao;
-
     @SystemServiceLog
     public List<Note> allNotes(String authorId) {
         return noteDao.getNotesByAuthorId(authorId);

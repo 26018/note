@@ -23,7 +23,6 @@ public class PoemController {
 
     @Resource
     PoemDao poemDao;
-
     @Value("${poemCount}")
     private int count;
 

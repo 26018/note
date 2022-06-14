@@ -8,7 +8,6 @@ import com.moon.note.service.NoteService;
 import com.moon.note.service.UserService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -20,7 +19,6 @@ import java.util.List;
 @RestController()
 @Validated
 public class NoteController {
-
     @Resource
     NoteService noteService;
     @Resource

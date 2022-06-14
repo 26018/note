@@ -5,44 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2b0b748-38ae-462e-a1a6-208fa5fefdcd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/note.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/NoteApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/config/GlobalCorsConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/config/IdentifyFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/config/RedisConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/config/SwaggerConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/controller/ErrorPageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/controller/NoteController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/controller/PoemController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/entity/Note.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/entity/Response.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/entity/Result.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/entity/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/entity/UserToken.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/exception/GlobalException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/mapper/NoteDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/mapper/PoemDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/mapper/UserDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/service/MailService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/service/NoteService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/DesUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/PasswordCheckConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/PasswordCheckUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/RedisUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/StringUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/TokenUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/moon/note/utils/VerificationUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-datasource.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-mail.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-redis.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-thymeleaf.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/moon/note/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note/src/main/java/com/moon/note/NoteApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/note/src/main/java/com/moon/note/NoteApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note/src/main/java/com/moon/note/controller/NoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/note/src/main/java/com/moon/note/controller/NoteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note/src/main/java/com/moon/note/controller/PoemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/note/src/main/java/com/moon/note/controller/PoemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note/src/main/java/com/moon/note/service/NoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/note/src/main/java/com/moon/note/service/NoteService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,19 +39,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/MoonLight/Desktop/Moon/Project/note/note",
-    "settings.editor.selected.configurable": "MavenSettings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/MoonLight/Desktop/Moon/Project/JavaBase&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;aad653ca3ee669635f2938b73098b6d7&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="NoteApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="note" />
@@ -103,10 +72,24 @@
       <updated>1655107088575</updated>
       <workItem from="1655107089783" duration="52000" />
       <workItem from="1655107169787" duration="150000" />
+      <workItem from="1655107700541" duration="2707000" />
+      <workItem from="1655119501673" duration="788000" />
+      <workItem from="1655187420985" duration="1507000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
